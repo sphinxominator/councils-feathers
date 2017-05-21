@@ -39,7 +39,21 @@ app.use('/', feathers.static(app.get('public')));
 app.configure(hooks());
 app.configure(postgres);
 app.configure(rest());
-app.configure(socketio());
+app.configure(socketio(function(io) {
+    io.on('connection', function(socket) {
+      socket.emit('news', { text: 'A client connected!' });
+      socket.on('my other event', function (data) {
+        console.log(data);
+      });
+    });
+
+    // Registering Socket.io middleware
+    io.use(function (socket, next) {
+      // Exposing a request property to services and hooks
+      socket.feathers.referrer = socket.request.referrer;
+      next();
+    });
+  }));
 
 app.use((req, res, next) => {
   req.feathers.cookies = req.cookies;
