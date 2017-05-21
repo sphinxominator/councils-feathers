@@ -8,7 +8,7 @@ import socketio from 'feathers-socketio/client'
 import io from 'socket.io-client';
 
 import logo from './logo.svg';
-import Meetings from './Meetings';
+import { MeetingsForm, MeetingsList } from './components/Meetings';
 
 const networkInterface = createNetworkInterface({
   opts: {
@@ -34,7 +34,7 @@ export default class App extends React.Component {
 
   constructor() {
     super()
-    this.mountSockets();
+    //this.mountSockets();
     this.lock = lock;
   }
 
@@ -52,12 +52,9 @@ export default class App extends React.Component {
     meetingService.on('created', (meeting) => {
       this.setState({ meetings: this.state.meetings.concat([meeting]) });
     })
-
   }
 
   render() {
-    const { meetings } = this.state
-
     return (
       <ApolloProvider client={client}>
         <Main>
@@ -68,7 +65,8 @@ export default class App extends React.Component {
           <Intro onClick={()=>this.showLock()}>
             To get started, edt <code>src/App.js</code> and save to reload
           </Intro>
-          <Meetings />
+          <MeetingsForm />
+          <MeetingsList />
 
         </Main>
       </ApolloProvider>

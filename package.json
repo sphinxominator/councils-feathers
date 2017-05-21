@@ -23,7 +23,9 @@
   "scripts": {
     "webpack": "webpack-dev-server",
     "eslint": "eslint src/. test/. --config .eslintrc.json",
-    "start": "concurrently \"nodemon src/index.js --exec babel-node\" \" cd app && yarn start  \" ",
+    "start": "concurrently \"yarn run start:server\" \" yarn run start:app  \" ",
+    "start:server": "nodemon src/index.js --exec babel-node --ignore 'app/*.js'",
+    "start:app": "cd app && yarn start",
     "mocha": "mocha test/ --recursive"
   },
   "dependencies": {
@@ -62,6 +64,7 @@
     "react-dom": "^15.5.4",
     "request": "^2.81.0",
     "request-promise": "^4.2.1",
+    "seamless-immutable": "^7.1.2",
     "serve-favicon": "^2.4.2",
     "winston": "^2.3.1"
   },
