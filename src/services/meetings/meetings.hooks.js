@@ -3,13 +3,11 @@ import { hooks } from 'feathers-authentication';
 module.exports = {
   before: {
     all: [],
-    find: [
-      hooks.authenticate('jwt')
+    find: [],
+    get: [],
+    create: [
+      
     ],
-    get: [
-      hooks.authenticate('jwt')
-    ],
-    create: [],
     update: [],
     patch: [],
     remove: []
