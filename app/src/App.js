@@ -5,6 +5,7 @@ import styled, { keyframes, ThemeProvider } from 'styled-components';
 
 import logo from './logo.svg';
 import { MeetingsForm, MeetingsList } from './components/Meetings';
+import { GroupsForm, GroupsList } from './components/Groups';
 import { AuthProvider, LoginButton } from './components/Auth';
 
 import theme from './theme';
@@ -28,6 +29,8 @@ export default () => (
             <h2>Welcome to Councils</h2>
             <LoginButton />
           </Header>
+          <GroupsForm />
+          <GroupsList />
           <MeetingsForm />
           <MeetingsList />
         </Main>

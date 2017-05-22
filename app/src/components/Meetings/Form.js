@@ -4,10 +4,11 @@ import { pure, compose, withState, withHandlers } from 'recompose';
 import { gql, graphql } from 'react-apollo';
 import styled from 'styled-components';
 
-import MeetingsQuery from './queries';
+import { MeetingsQuery } from '../queries';
 
 const MeetingFormPure = ({ value, onSubmit, onChange }) => (
   <form onSubmit={onSubmit}>
+    Meeting
     <Input type='text' placeholder='text' onChange={onChange} />
   </form>
 );

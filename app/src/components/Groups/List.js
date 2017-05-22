@@ -4,17 +4,18 @@ import { pure, compose } from 'recompose';
 import { graphql } from 'react-apollo';
 import styled from 'styled-components';
 
-import { MeetingsQuery } from '../queries';
+import { GroupsQuery } from '../queries';
 import displayLoadingState from '../Loading';
-import MeetingCard from './Card';
 
-const MeetingsPure = ({ data: { meetings } }) => (
-  <MeetingsList>
-    { meetings.map(({ id, text }) => ( <MeetingCard key={id} text={text} /> )) }
-  </MeetingsList>
+import Badge from './Badge';
+
+const GroupsPure = ({ data: { groups } }) => (
+  <GroupsList>
+    { groups.map(({ id, name, color }) => ( <Badge key={id} color={color} name={name} /> ))  }
+  </GroupsList>
 );
 
-const MeetingsList = styled.div`
+const GroupsList = styled.div`
   max-width: 70em;
   margin: 0 auto;
   display: flex;
@@ -22,7 +23,7 @@ const MeetingsList = styled.div`
 `
 
 export default compose(
-  graphql(MeetingsQuery),
+  graphql(GroupsQuery),
   displayLoadingState,
   pure
-)(MeetingsPure);
+)(GroupsPure);
