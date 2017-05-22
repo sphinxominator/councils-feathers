@@ -9,8 +9,12 @@ import { GroupsQuery } from '../queries';
 const GroupFormPure = ({ onSubmit, onChangeName, onChangeColor }) => (
   <form onSubmit={onSubmit}>
     Group
-    <Input type='text' placeholder='name' onChange={onChangeName} />
-    <Input type='text' placeholder='color' onChange={onChangeColor} />
+    <Input required type='text' placeholder='name' onChange={onChangeName} />
+    <Select onChange={onChangeColor}>
+      <option value='#48ACF0'>Lyseblå</option>
+      <option value='#B74F6F'>Lilla</option>
+      <option value='#1C77C3'>Mørkeblå</option>
+    </Select>
     <input type='submit' value='submit' />
   </form>
 );
@@ -36,11 +40,8 @@ const submitProp = {
        group: { name, color }
      },
      update: (store, { data: { createGroup } }) => {
-       // Read the data from our cache for this query.
        const data = store.readQuery({ query: GroupsQuery });
-       // Add our comment from the mutation to the end.
        data.groups.unshift(createGroup);
-       // Write our data back to the cache.
        store.writeQuery({ query: GroupsQuery, data });
      },
    })
@@ -66,10 +67,16 @@ const Input = styled.input`
   margin: 1rem;
 `
 
+const Select = styled.select`
+  padding: .5rem;
+  margin: 1rem;
+`
+
+
 export default compose(
   graphql(createGroup, submitProp),
   withState('name', 'updateName', ''),
-  withState('color', 'updateColor', ''),
+  withState('color', 'updateColor', '#48ACF0'),
   withHandlers(handlers),
   pure
 )(GroupFormPure)

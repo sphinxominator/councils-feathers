@@ -23,12 +23,12 @@ export default () => (
   <ApolloProvider client={client}>
     <ThemeProvider theme={theme}>
       <AuthProvider>
+        <Header>
+          <Logo src={logo} alt="logo" />
+          <h2>Welcome to Councils</h2>
+          <LoginButton />
+        </Header>
         <Main>
-          <Header>
-            <Logo src={logo} alt="logo" />
-            <h2>Welcome to Councils</h2>
-            <LoginButton />
-          </Header>
           <GroupsForm />
           <GroupsList />
           <MeetingsForm />
@@ -50,12 +50,13 @@ const rotate360 = keyframes`
 `
 
 const Main = styled.div`
-  text-align: center;
+  margin: 0 auto;
+  max-width: 60rem;
 `
 
 const Logo = styled.img`
   height: 80px;
-  animation: ${rotate360} 1s linear infinite;
+  animation: ${rotate360} 5s linear infinite;
 `
 
 const Header = styled.div`
@@ -63,4 +64,5 @@ const Header = styled.div`
   height: 160px;
   padding: 20px;
   color: white;
+  text-align: center;
 `

@@ -10,7 +10,9 @@ import MeetingCard from './Card';
 
 const MeetingsPure = ({ data: { meetings } }) => (
   <MeetingsList>
-    { meetings.map(({ id, text }) => ( <MeetingCard key={id} text={text} /> )) }
+    <NegativeMargins>
+      { meetings.map(({ id, text }) => ( <MeetingCard key={id} text={text} /> )) }
+    </NegativeMargins>
   </MeetingsList>
 );
 
@@ -19,6 +21,10 @@ const MeetingsList = styled.div`
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
+`
+const NegativeMargins = styled.div`
+  margin: 0 -${props => props.theme.gutter}px;
+  width: 100%;
 `
 
 export default compose(

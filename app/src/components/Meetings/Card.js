@@ -16,6 +16,7 @@ const StyledGrid = styled(Grid)`
 `
 
 const Card = styled.div`
+  border-radius: ${props => props.theme.rounding};
   padding: 1rem;
   height: auto;
   background-color: ${props => props.theme.primary};
