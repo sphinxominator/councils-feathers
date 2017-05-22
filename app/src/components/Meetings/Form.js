@@ -2,12 +2,13 @@ import React from 'react';
 
 import { pure, compose, withState, withHandlers } from 'recompose';
 import { gql, graphql } from 'react-apollo';
+import styled from 'styled-components';
 
 import MeetingsQuery from './queries';
 
 const MeetingFormPure = ({ value, onSubmit, onChange }) => (
   <form onSubmit={onSubmit}>
-    <input type='text' placeholder='text' onChange={onChange} />
+    <Input type='text' placeholder='text' onChange={onChange} />
   </form>
 );
 
@@ -20,7 +21,7 @@ const createMeeting = gql`
   }
 `;
 
-const mutateProps = {
+const submitProp = {
   props: ({ mutate }) => ({
     submit: ({ text }) => mutate({
       variables: {
@@ -48,8 +49,13 @@ const handlers = {
   }
 };
 
+const Input = styled.input`
+  padding: .5rem;
+  margin: 1rem;
+`
+
 export default compose(
-  graphql(createMeeting, mutateProps),
+  graphql(createMeeting, submitProp),
   withState('value', 'updateValue', ''),
   withHandlers(handlers),
   pure

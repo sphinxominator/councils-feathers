@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "feathers-client": "^2.2.0",
+    "grid-styled": "^1.0.1",
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
     "react-apollo": "^1.2.0",
