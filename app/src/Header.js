@@ -1,6 +1,6 @@
 import React from 'react';
-import logo from './logo.svg';
-import { LoginButton } from './components/Auth';
+//import logo from './logo.svg';
+//import { LoginButton } from './components/Auth';
 import styled, { keyframes } from 'styled-components';
 
 import { Link } from 'react-router-dom';
@@ -8,10 +8,9 @@ import { Link } from 'react-router-dom';
 export default () => (
   <Header>
     <Link to='/'>
-      <Logo src={logo} alt="logo" />
+      <Logo src={'no'} alt="logo" />
     </Link>
-    <h2>Welcome to Councils</h2>
-    <LoginButton />
+    <h2>Welcome to Councilssssss</h2>
   </Header>
 );
 

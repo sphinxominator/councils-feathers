@@ -13,6 +13,8 @@ const hooks = require('feathers-hooks');
 const rest = require('feathers-rest');
 const socketio = require('feathers-socketio');
 
+const renderApp = require('./render');
+
 const middleware = require('./middleware');
 const services = require('./services');
 const appHooks = require('./app.hooks');
@@ -33,7 +35,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(favicon(path.join(app.get('public'), 'favicon.ico')));
 // Host the public folder
-app.use('/', feathers.static(app.get('public')));
 
 // Set up Plugins and providers .
 app.configure(hooks());
@@ -54,6 +55,8 @@ app.use((req, res, next) => {
 });
 
 app.configure(services);
+
+app.use('/', renderApp);
 
 // Configure middleware (see `middleware/index.js`) - always has to be last
 app.configure(middleware);
