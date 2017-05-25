@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import Grid from 'grid-styled';
 
-export default ({ text, date = new Date() }) => (
+export default ({ text, date = new Date(), group }) => (
   <StyledGrid xs={1} sm={1/2} md={1/3} lg={1/4}>
-    <Card >
-      <Text>{text}</Text>
+    <Card group={group}>
+      <Text>{group.name}</Text>
       <Text>{date.toString()}</Text>
     </Card>
   </StyledGrid>
@@ -19,7 +19,7 @@ const Card = styled.div`
   border-radius: ${props => props.theme.rounding};
   padding: 1rem;
   height: auto;
-  background-color: ${props => props.theme.primary};
+  background-color: ${props => props.group.color};
   color: white;
   text-align: center;
 

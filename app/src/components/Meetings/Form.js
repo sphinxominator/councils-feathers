@@ -18,15 +18,21 @@ const createMeeting = gql`
     createMeeting(meeting: $meeting) {
       id
       text
+      groupId
+      group {
+        id
+        name
+        color
+      }
     }
   }
 `;
 
 const submitProp = {
   props: ({ mutate }) => ({
-    submit: ({ text }) => mutate({
+    submit: ({ text, groupId }) => mutate({
       variables: {
-       meeting: { text }
+       meeting: { text, groupId: 1 }
      },
      update: (store, { data: { createMeeting } }) => {
        // Read the data from our cache for this query.

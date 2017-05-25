@@ -1,15 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export default ({ name, color }) => (
-  <Badge>
-    <Letter color={color}>{ name.charAt(0) }</Letter>
+
+export default ({ name, color, id, setActiveGroup, active }) => (
+  <Badge  onClick={() => setActiveGroup(id)}>
+    <Letter color={color} active={active} >
+      { name.charAt(0) }
+    </Letter>
     { name }
   </Badge>
 )
 
 const Letter = styled.span`
-  background-color: ${props => props.color};
+  background-color: ${props => props.active ? props.color : 'hsla(0,0%,78%,1)' };
   border-radius: ${props => props.theme.rounding};
   color: white;
   display: inline-flex;

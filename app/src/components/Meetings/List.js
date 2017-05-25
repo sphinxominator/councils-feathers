@@ -2,19 +2,28 @@ import React from 'react';
 
 import { pure, compose } from 'recompose';
 import { graphql } from 'react-apollo';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import { MeetingsQuery } from '../queries';
 import displayLoadingState from '../Loading';
 import MeetingCard from './Card';
 
-const MeetingsPure = ({ data: { meetings } }) => (
+const MeetingsPure = ({ data: { meetings }, activeGroup }) => (
   <MeetingsList>
     <NegativeMargins>
-      { meetings.map(({ id, text }) => ( <MeetingCard key={id} text={text} /> )) }
+      { meetings.filter(({ group }) => (
+        !activeGroup || group.id === activeGroup
+      )).map(({ id, text, group }) => (
+        <MeetingCard key={id} text={text} group={group} />
+      )) }
     </NegativeMargins>
   </MeetingsList>
 );
+
+const mapStateToProps = (state) => ({
+  activeGroup: state.groups.activeGroup
+});
 
 const MeetingsList = styled.div`
   max-width: 70em;
@@ -28,6 +37,7 @@ const NegativeMargins = styled.div`
 `
 
 export default compose(
+  connect(mapStateToProps),
   graphql(MeetingsQuery),
   displayLoadingState,
   pure
