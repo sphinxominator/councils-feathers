@@ -16,6 +16,7 @@ const Letter = styled.span`
   border-radius: ${props => props.theme.rounding};
   color: white;
   display: inline-flex;
+  height: 1rem;
   justify-content: center;
   margin-right: .5rem;
   padding: .5rem;

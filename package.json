@@ -64,6 +64,7 @@
     "pg": "^6.1.5",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
+    "react-router-dom": "^4.1.1",
     "request": "^2.81.0",
     "request-promise": "^4.2.1",
     "seamless-immutable": "^7.1.2",

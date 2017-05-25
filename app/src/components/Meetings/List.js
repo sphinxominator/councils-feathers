@@ -26,8 +26,6 @@ const mapStateToProps = (state) => ({
 });
 
 const MeetingsList = styled.div`
-  max-width: 70em;
-  margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
 `

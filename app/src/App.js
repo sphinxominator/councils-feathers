@@ -4,13 +4,13 @@ import { ApolloClient,  ApolloProvider, createNetworkInterface } from 'react-apo
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import { groups as groupsReducers } from './reducers';
+import { Route } from 'react-router-dom';
 
-import styled, { keyframes, ThemeProvider } from 'styled-components';
+import { ThemeProvider } from 'styled-components';
 
-import logo from './logo.svg';
-import { MeetingsForm, MeetingsList } from './components/Meetings';
-import { GroupsForm, GroupsList } from './components/Groups';
-import { AuthProvider, LoginButton } from './components/Auth';
+import { AuthProvider } from './components/Auth';
+import Header from './Header';
+import Main from './Main';
 
 import theme from './theme';
 
@@ -42,47 +42,10 @@ export default () => (
     <ApolloProvider client={client} store={store}>
       <ThemeProvider theme={theme}>
         <AuthProvider>
-          <Header>
-            <Logo src={logo} alt="logo" />
-            <h2>Welcome to Councils</h2>
-            <LoginButton />
-          </Header>
-          <Main>
-            <GroupsForm />
-            <GroupsList />
-            <MeetingsForm />
-            <MeetingsList />
-          </Main>
+          <Route path='/' component={Header} />
+          <Route path='/' component={Main} />
         </AuthProvider>
       </ThemeProvider>
     </ApolloProvider>
   </Provider>
 );
-
-const rotate360 = keyframes`
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-`
-
-const Main = styled.div`
-  margin: 0 auto;
-  max-width: 60rem;
-`
-
-const Logo = styled.img`
-  height: 80px;
-  animation: ${rotate360} 5s linear infinite;
-`
-
-const Header = styled.div`
-  background-color: #222;
-  height: 160px;
-  padding: 20px;
-  color: white;
-  text-align: center;
-`
