@@ -1,3 +1,5 @@
+import renderApp from './render';
+
 const path = require('path');
 const favicon = require('serve-favicon');
 const compress = require('compression');
@@ -13,7 +15,6 @@ const hooks = require('feathers-hooks');
 const rest = require('feathers-rest');
 const socketio = require('feathers-socketio');
 
-const renderApp = require('./render');
 
 const middleware = require('./middleware');
 const services = require('./services');

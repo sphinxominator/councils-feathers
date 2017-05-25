@@ -10,7 +10,7 @@ export default () => (
     <Link to='/'>
       <Logo src={'no'} alt="logo" />
     </Link>
-    <h2>Welcome to Councilssssss</h2>
+    <h2>Welcome to Councils</h2>
   </Header>
 );
 

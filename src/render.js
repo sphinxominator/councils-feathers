@@ -12,7 +12,7 @@ import { groups as groupsReducers } from '../app/src/reducers'
 
 import App from '../app/src/App';
 
-const render = (req, res) => {
+export default (req, res) => {
   const client = new ApolloClient({
     ssrMode: true,
     // Remember that this is the interface the SSR server will use to connect to the
@@ -62,34 +62,30 @@ const render = (req, res) => {
   });
 }
 
-function html(content, state, styles) {
-  return `
-    <html>
-      <head>
-        <style>
-          body {
-            margin: 0;
-            padding: 0;
-            font-family: sans-serif;
-          }
+const html = (content, state, styles) => (`
+  <html>
+    <head>
+      <style>
+        body {
+          margin: 0;
+          padding: 0;
+          font-family: sans-serif;
+        }
 
-          [data-reactroot] {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-          }
-        </style>
-        ${styles}
-      </head>
-      <body>
-        <div id="content">${content}</div>
-        <script>
-            window.__APOLLO_STATE__=${JSON.stringify(state).replace(/</g, '\\u003c')}
-         </script>
-         <script type="text/javascript" src="http://localhost:3001/build/static/js/main.11d55634.js"></script>
-      </body>
-    </html>`
-}
-
-
-module.exports = render;
+        [data-reactroot] {
+          height: 100vh;
+          display: flex;
+          flex-direction: column;
+        }
+      </style>
+      ${styles}
+    </head>
+    <body>
+      <div id="content">${content}</div>
+      <script>
+          window.__APOLLO_STATE__=${JSON.stringify(state).replace(/</g, '\\u003c')}
+       </script>
+       <script type="text/javascript"></script>
+    </body>
+  </html>
+`)
