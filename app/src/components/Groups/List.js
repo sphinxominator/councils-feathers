@@ -22,14 +22,14 @@ const GroupsPure = ({ data: { groups }, activeGroup, setActiveGroup }) => (
           id={id}
           color={color}
           name={name}
-          setActiveGroup={setActiveGroup}
+          onClick={setActiveGroup}
           active={activeGroup===id || activeGroup===null} /> )
       )}
   </GroupsList>
 );
 
-const mapStateToProps = (state) => ({
-  activeGroup: state.groups.activeGroup
+const mapStateToProps = ({ groups }) => ({
+  activeGroup: groups.activeGroup
 });
 
 const mapDispatchToProps = (dispatch) => (

@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 
-export default ({ name, color, id, setActiveGroup, active }) => (
-  <Badge  onClick={() => setActiveGroup(id)}>
+export default ({ name, color, id, onClick, active }) => (
+  <Badge  onClick={() => onClick(id)}>
     <Letter color={color} active={active} >
       { name.charAt(0) }
     </Letter>

@@ -2,11 +2,12 @@ import React from 'react';
 
 import { pure, compose, withState, withHandlers } from 'recompose';
 import { gql, graphql } from 'react-apollo';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import { MeetingsQuery } from '../queries';
 
-const MeetingFormPure = ({ value, onSubmit, onChange }) => (
+export const MeetingFormPure = ({ value, onSubmit, onChange }) => (
   <form onSubmit={onSubmit}>
     Meeting
     <Input type='text' placeholder='text' onChange={onChange} />
@@ -30,9 +31,12 @@ const createMeeting = gql`
 
 const submitProp = {
   props: ({ mutate }) => ({
-    submit: ({ text, groupId }) => mutate({
+    submit: (props) => mutate({
       variables: {
-       meeting: { text, groupId: 1 }
+       meeting: {
+         text: props.text,
+         groupId: props.groupId
+       }
      },
      update: (store, { data: { createMeeting } }) => {
        // Read the data from our cache for this query.
@@ -52,9 +56,16 @@ const handlers = {
   },
   onSubmit: props => event => {
     event.preventDefault();
-    props.submit({ text: props.value } );
+    props.submit({
+      text: props.value,
+      groupId: props.activeGroup
+     });
   }
 };
+
+const mapStateToProps = ({ groups }) => ({
+  activeGroup: groups.activeGroup
+});
 
 const Input = styled.input`
   padding: .5rem;
@@ -62,6 +73,7 @@ const Input = styled.input`
 `
 
 export default compose(
+  connect(mapStateToProps),
   graphql(createMeeting, submitProp),
   withState('value', 'updateValue', ''),
   withHandlers(handlers),

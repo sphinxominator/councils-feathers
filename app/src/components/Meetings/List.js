@@ -9,7 +9,7 @@ import { MeetingsQuery } from '../queries';
 import displayLoadingState from '../Loading';
 import MeetingCard from './Card';
 
-const MeetingsPure = ({ data: { meetings }, activeGroup }) => (
+const MeetingsPure = ({ data: { meetings } = [], activeGroup }) => (
   <MeetingsList>
     <NegativeMargins>
       { meetings.filter(({ group }) => (
