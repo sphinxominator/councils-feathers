@@ -26,7 +26,8 @@
     "start": "concurrently \"yarn run start:server\" \" yarn run start:app  \" ",
     "start:server": "nodemon src/index.js --exec babel-node --ignore 'app/*.js'",
     "start:app": "cd app && yarn start",
-    "mocha": "mocha test/ --recursive"
+    "mocha": "mocha test/ --recursive",
+    "knex": "knex"
   },
   "dependencies": {
     "auth0-lock": "^10.16.0",
@@ -54,6 +55,7 @@
     "graphql-server-express": "^0.7.2",
     "graphql-tools": "^0.11.0",
     "helmet": "^3.6.0",
+    "humps": "lloydh/humps#patch-1",
     "jwt-decode": "^2.2.0",
     "knex": "^0.13.0",
     "mocha": "^3.3.0",

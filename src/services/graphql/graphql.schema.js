@@ -2,6 +2,8 @@ export default `
   type Meeting {
     id: String!
     text: String
+    groupId: Int!
+    group: Group
   }
 
   type Group {
@@ -19,6 +21,7 @@ export default `
 
   input meetingInput {
     text: String!
+    groupId: Int
   }
 
   input groupInput {

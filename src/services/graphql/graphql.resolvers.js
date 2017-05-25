@@ -5,6 +5,11 @@ export default function() {
 
   // The root provides a resolver function for each API endpoint
   return {
+    Meeting: {
+      group(meeting, args, context) {
+        return Group.get(meeting.groupId, context)
+      }
+    },
     RootQuery: {
       meeting(root, { id }, context) {
         return Meeting.get(id, context);

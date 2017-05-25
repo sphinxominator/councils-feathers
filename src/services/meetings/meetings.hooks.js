@@ -1,12 +1,13 @@
-import { hooks } from 'feathers-authentication';
+const { authenticate } = require('feathers-authentication').hooks;
+const { decamelizeModel, camelizeModel } = require('../../hooks/camelizers');
 
 module.exports = {
   before: {
-    all: [],
+    all: [decamelizeModel()],
     find: [],
     get: [],
     create: [
-      
+
     ],
     update: [],
     patch: [],
@@ -14,7 +15,7 @@ module.exports = {
   },
 
   after: {
-    all: [],
+    all: [camelizeModel()],
     find: [],
     get: [],
     create: [],
