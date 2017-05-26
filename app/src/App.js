@@ -4,8 +4,8 @@ import { ThemeProvider } from 'styled-components';
 //import { AuthProvider } from './components/Auth';
 import { Route } from 'react-router-dom'
 
-import Header from './Header';
-import Main from './Main';
+import Header from './components/Header';
+import Main from './components/Main';
 
 import theme from './theme';
 

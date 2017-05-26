@@ -1,5 +1,7 @@
 import { gql } from 'react-apollo';
 
+
+// Queries
 export const MeetingsQuery = gql`
   query MeetingsQuery {
     meetings {
@@ -24,17 +26,18 @@ export const GroupsQuery = gql`
   }
 `
 
-export const MeetingsAndGroupsQuery = gql`
-  query MeetingsAndGroupsQuery {
-    meetings {
+// Mutations
+export const CreateMeeting = gql`
+  mutation createMeeting($meeting: meetingInput!) {
+    createMeeting(meeting: $meeting) {
       id
       text
       groupId
-    }
-    groups {
-      id
-      name
-      color
+      group {
+        id
+        name
+        color
+      }
     }
   }
-`
+`;

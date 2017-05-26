@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-import './index.css';
+
 import { BrowserRouter } from 'react-router-dom'
 import { ApolloClient,  ApolloProvider, createNetworkInterface } from 'react-apollo';
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import { groups as groupsReducers } from './reducers';
 
+import App from './App';
 
 const networkInterface = createNetworkInterface({
   opts: {

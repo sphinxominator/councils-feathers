@@ -1,11 +1,11 @@
 import React from 'react';
 
 import { pure, compose, withState, withHandlers } from 'recompose';
-import { gql, graphql } from 'react-apollo';
+import { graphql } from 'react-apollo';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import { MeetingsQuery } from '../queries';
+import { MeetingsQuery, CreateMeeting } from '../../queries';
 
 export const MeetingFormPure = ({ value, onSubmit, onChange }) => (
   <form onSubmit={onSubmit}>
@@ -13,21 +13,6 @@ export const MeetingFormPure = ({ value, onSubmit, onChange }) => (
     <Input type='text' placeholder='text' onChange={onChange} />
   </form>
 );
-
-const createMeeting = gql`
-  mutation createMeeting($meeting: meetingInput!) {
-    createMeeting(meeting: $meeting) {
-      id
-      text
-      groupId
-      group {
-        id
-        name
-        color
-      }
-    }
-  }
-`;
 
 const submitProp = {
   props: ({ mutate }) => ({
@@ -74,7 +59,7 @@ const Input = styled.input`
 
 export default compose(
   connect(mapStateToProps),
-  graphql(createMeeting, submitProp),
+  graphql(CreateMeeting, submitProp),
   withState('value', 'updateValue', ''),
   withHandlers(handlers),
   pure

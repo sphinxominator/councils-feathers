@@ -5,7 +5,7 @@ import { graphql } from 'react-apollo';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import { MeetingsQuery } from '../queries';
+import { MeetingsQuery } from '../../queries';
 import displayLoadingState from '../Loading';
 import MeetingCard from './Card';
 

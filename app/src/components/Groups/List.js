@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { graphql } from 'react-apollo';
-import { GroupsQuery } from '../queries';
+import { GroupsQuery } from '../../queries';
 import displayLoadingState from '../Loading';
 
 import styled from 'styled-components';

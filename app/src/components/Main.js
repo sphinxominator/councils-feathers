@@ -3,8 +3,8 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { MeetingsForm, MeetingsList } from './components/Meetings';
-import { GroupsForm, GroupsList } from './components/Groups';
+import { MeetingsForm, MeetingsList } from './Meetings';
+import { GroupsForm, GroupsList } from './Groups';
 import Navigator from './Navigator';
 
 const MeetingsContainer = () => (
@@ -41,5 +41,6 @@ const Main = styled.div`
   flex-direction: column;
   flex-grow: 1;
   margin: 0 auto;
-  width: 80%;
+  width: 95%;
+  max-width: 60rem;
 `

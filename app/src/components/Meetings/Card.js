@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import Grid from 'grid-styled';
+import Grid from '../Grid';
 
-export default ({ text, date = new Date(), group }) => (
+var d = new Date("October 13, 2014 11:13:00");
+
+export default ({ text, date = d, group }) => (
   <StyledGrid xs={1} sm={1/2} md={1/3} lg={1/4}>
     <Card group={group}>
       <Text>{group.name}</Text>

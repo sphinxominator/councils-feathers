@@ -4,7 +4,7 @@ import { pure, compose, withState, withHandlers } from 'recompose';
 import { gql, graphql } from 'react-apollo';
 import styled from 'styled-components';
 
-import { GroupsQuery } from '../queries';
+import { GroupsQuery } from '../../queries';
 
 const GroupFormPure = ({ onSubmit, onChangeName, onChangeColor }) => (
   <form onSubmit={onSubmit}>
