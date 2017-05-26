@@ -65,6 +65,7 @@ export default (req, res) => {
 const html = (content, state, styles) => (`
   <html>
     <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <style>
         body {
           margin: 0;
@@ -81,11 +82,11 @@ const html = (content, state, styles) => (`
       ${styles}
     </head>
     <body>
-      <div id="content">${content}</div>
+      <div id="root">${content}</div>
       <script>
           window.__APOLLO_STATE__=${JSON.stringify(state).replace(/</g, '\\u003c')}
        </script>
-       <script type="text/javascript"></script>
+       <script type="text/javascript" src="http://localhost:3000/static/js/bundle.js"></script>
     </body>
   </html>
 `)
