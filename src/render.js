@@ -1,6 +1,8 @@
 import 'isomorphic-fetch';
 
 import React from 'react';
+import path from 'path';
+import fs from 'fs';
 
 import { renderToStaticMarkup, renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
@@ -12,7 +14,18 @@ import { groups as groupsReducers } from '../app/src/reducers'
 
 import App from '../app/src/App';
 
-export default (req, res) => {
+export default async (req, res) => {
+
+  //const filePath = path.resolve(__dirname, '..', 'app', 'build', 'index.html')
+  const filePath = path.resolve(__dirname, '..', 'app', 'public', 'index.html');
+  const devScript = `<script type="text/javascript" src="http://localhost:3000/static/js/bundle.js"></script>`
+
+  const htmlData = await new Promise((resolve, reject) => {
+    fs.readFile(filePath, 'utf8', (err, htmlData) => {
+      err ? reject(err) : resolve(htmlData);
+    })
+  });
+
   const client = new ApolloClient({
     ssrMode: true,
     // Remember that this is the interface the SSR server will use to connect to the
@@ -52,41 +65,19 @@ export default (req, res) => {
   );
 
   renderToStringWithData(app).then((content) => {
-    const initialState = {[client.reduxRootKey]: client.getInitialState() };
+    const initialState = {'apollo': client.getInitialState() };
     const styles = sheet.getStyleTags();
-    const markup = html(content, initialState, styles);
-
+    const markup = htmlData.replace('<!--{{SSR}}-->', content).replace('<!--{{STYLES}}-->', styles).replace('<!--{{DEVSCRIPT}}-->', devScript).replace('<!--{{INITIAL_STATE}}-->', formattedState(initialState));
     res.status(200);
-    res.send(`<!doctype html>\n${markup}`);
+    res.send(markup);
     res.end();
   });
-}
+};
 
-const html = (content, state, styles) => (`
-  <html>
-    <head>
-      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <style>
-        body {
-          margin: 0;
-          padding: 0;
-          font-family: sans-serif;
-        }
-
-        [data-reactroot] {
-          height: 100vh;
-          display: flex;
-          flex-direction: column;
-        }
-      </style>
-      ${styles}
-    </head>
-    <body>
-      <div id="root">${content}</div>
-      <script>
-          window.__APOLLO_STATE__=${JSON.stringify(state).replace(/</g, '\\u003c')}
-       </script>
-       <script type="text/javascript" src="http://localhost:3000/static/js/bundle.js"></script>
-    </body>
-  </html>
+const formattedState = (state) => (`
+  <script>
+    // WARNING: See the following for security issues around embedding JSON in HTML:
+    // http://redux.js.org/docs/recipes/ServerRendering.html#security-considerations
+    window.__INITIAL_STATE__ = ${JSON.stringify(state).replace(/</g, '\\u003c')}
+  </script>
 `)

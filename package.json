@@ -26,12 +26,14 @@
     "start": "concurrently \"yarn run start:server\" \" yarn run start:app  \" ",
     "start:server": "nodemon src/index.js --exec babel-node --ignore 'app/*.js'",
     "start:server:dev": "nodemon src/index.js --exec babel-node",
+    "start:server:prod": "cd app && yarn build && cd ../ && babel-node src/index.js",
     "start:app": "cd app && yarn start",
     "mocha": "mocha test/ --recursive",
     "knex": "knex"
   },
   "dependencies": {
     "auth0-lock": "^10.16.0",
+    "babel-preset-react-app": "^3.0.0",
     "body-parser": "^1.17.1",
     "compression": "^1.6.2",
     "concurrently": "^3.4.0",

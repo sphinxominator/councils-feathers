@@ -19,12 +19,14 @@ const networkInterface = createNetworkInterface({
 
 const client = new ApolloClient({ networkInterface });
 
+const initialState = window.__INITIAL_STATE__;
+
 const store = createStore(
   combineReducers({
     apollo: client.reducer(),
     groups: groupsReducers
   }),
-  {}, // initial state
+  initialState,
   compose(
       applyMiddleware(client.middleware()),
       // If you are using the devToolsExtension, you can add it here also
