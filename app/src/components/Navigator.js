@@ -17,10 +17,12 @@ export default () => (
 const Navigator = styled.div`
   background-color: ${props => props.theme.primary};
   display: flex;
-  margin-bottom: 1rem;
+  bottom: 0;
   padding: 1rem;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  position: fixed;
 `
 
 const Button = styled.span`

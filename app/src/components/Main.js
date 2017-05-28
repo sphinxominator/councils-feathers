@@ -5,7 +5,6 @@ import styled from 'styled-components';
 
 import { MeetingsForm, MeetingsList } from './Meetings';
 import { GroupsForm, GroupsList } from './Groups';
-import Navigator from './Navigator';
 
 const MeetingsContainer = () => (
   <Container>
@@ -27,12 +26,12 @@ export default () => (
     <Route exact path='/' component={MeetingsContainer} />
     <Route exact path='/meetings' component={MeetingsContainer} />
     <Route exact path='/users' component={UsersContainer} />
-    <Navigator />
   </Main>
 );
 
 const Container = styled.div`
   flex-grow: 1;
+  margin-bottom: 2rem;
 `
 
 const Main = styled.div`
