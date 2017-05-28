@@ -28,8 +28,8 @@
     "start:dev": "concurrently \"yarn run start:server\" \" yarn run start:app  \" ",
     "start:server:dev": "NODE_ENV=development nodemon src/index.js --exec babel-node",
     "start:server": "NODE_ENV=development nodemon src/index.js --exec babel-node --ignore 'app/*.js'",
-    "start": " cd app && yarn build && cd ../ && NODE_ENV=production babel-node src/index.js",
-    "postinstall": "cd app && yarn install",
+    "start": "NODE_ENV=production babel-node src/index.js",
+    "postinstall": "cd app && yarn install && yarn build",
     "webpack": "webpack-dev-server"
   },
   "dependencies": {
