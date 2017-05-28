@@ -1,4 +1,4 @@
 {
   "postgres": {
-    "connection": "DB_URL"
+    "connection": "DATABASE_URL"
 }
