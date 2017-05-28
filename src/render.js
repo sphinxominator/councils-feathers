@@ -15,10 +15,15 @@ import { groups as groupsReducers } from '../app/src/reducers'
 import App from '../app/src/App';
 
 export default async (req, res) => {
+  let filePath;
+  let devScript = '';
 
-  //const filePath = path.resolve(__dirname, '..', 'app', 'build', 'index.html')
-  const filePath = path.resolve(__dirname, '..', 'app', 'public', 'index.html');
-  const devScript = `<script type="text/javascript" src="http://localhost:3000/static/js/bundle.js"></script>`
+  if(process.env.NODE_ENV !== 'production' ) {
+    filePath = path.resolve(__dirname, '..', 'app', 'public', 'index.html');
+    devScript = `<script type="text/javascript" src="http://localhost:3000/static/js/bundle.js"></script>`
+  } else {
+    filePath = path.resolve(__dirname, '..', 'app', 'build', 'index.html');
+  }
 
   const htmlData = await new Promise((resolve, reject) => {
     fs.readFile(filePath, 'utf8', (err, htmlData) => {
@@ -57,7 +62,7 @@ export default async (req, res) => {
   const app = sheet.collectStyles(
     <Provider store={store}>
       <ApolloProvider client={client} store={store}>
-        <StaticRouter location={req.originalUrl} context={{}}>
+        <StaticRouter location={req.url} context={{}}>
           <App />
         </StaticRouter>
       </ApolloProvider>
@@ -65,9 +70,9 @@ export default async (req, res) => {
   );
 
   renderToStringWithData(app).then((content) => {
-    const initialState = {'apollo': client.getInitialState() };
+    const initialState = formattedState({'apollo': client.getInitialState() });
     const styles = sheet.getStyleTags();
-    const markup = htmlData.replace('<!--{{SSR}}-->', content).replace('<!--{{STYLES}}-->', styles).replace('<!--{{DEVSCRIPT}}-->', devScript).replace('<!--{{INITIAL_STATE}}-->', formattedState(initialState));
+    const markup = injectVariables(htmlData, { content, styles, devScript, initialState });
     res.status(200);
     res.send(markup);
     res.end();
@@ -81,3 +86,9 @@ const formattedState = (state) => (`
     window.__INITIAL_STATE__ = ${JSON.stringify(state).replace(/</g, '\\u003c')}
   </script>
 `)
+
+const injectVariables = (html, variables = {}) => (
+  Object.keys(variables).reduce( (acc, key) => (
+    acc.replace(`{{${key}}}`, variables[key])
+  ), html )
+);
