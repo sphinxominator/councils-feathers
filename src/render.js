@@ -17,12 +17,10 @@ import App from '../app/src/App';
 export default async (req, res) => {
   let filePath;
   let devScript = '';
-  let uri = process.env.HOST;
 
   if(process.env.NODE_ENV !== 'production' ) {
     filePath = path.resolve(__dirname, '..', 'app', 'public', 'index.html');
-    devScript = `<script type="text/javascript" src="http://localhost:3000/static/js/bundle.js"></script>`
-    uri = uri + ':' + process.env.PORT
+    devScript = `<script type="text/javascript" src="http://localhost:3000/static/js/bundle.js"></script>`;
   } else {
     filePath = path.resolve(__dirname, '..', 'app', 'build', 'index.html');
   }
@@ -38,7 +36,7 @@ export default async (req, res) => {
     // Remember that this is the interface the SSR server will use to connect to the
     // API server, so we need to ensure it isn't firewalled, etc
     networkInterface: createNetworkInterface({
-      uri: uri + '/graphql',
+      uri: process.env.URI + '/graphql',
       opts: {
         credentials: 'same-origin',
         // transfer request headers to networkInterface so that they're accessible to proxy server

@@ -3,13 +3,14 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { MeetingsForm, MeetingsList } from './Meetings';
+import { MeetingsForm, MeetingsList, MeetingsPage } from './Meetings';
 import { GroupsForm, GroupsList } from './Groups';
 
 const MeetingsContainer = () => (
   <Container>
     <MeetingsForm />
     <MeetingsList />
+    <Route exact path='/meetings/:id' component={MeetingsPage} />
   </Container>
 );
 
@@ -24,7 +25,7 @@ export default () => (
     <GroupsForm />
     <GroupsList />
     <Route exact path='/' component={MeetingsContainer} />
-    <Route exact path='/meetings' component={MeetingsContainer} />
+    <Route path='/meetings' component={MeetingsContainer} />
     <Route exact path='/users' component={UsersContainer} />
   </Main>
 );

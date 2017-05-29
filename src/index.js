@@ -1,10 +1,7 @@
 /* eslint-disable no-console */
+require('dotenv').config();
+
 const logger = require('winston');
-
-if(process.env.NODE_ENV !== 'production') {
-  const config = require('dotenv').config();
-}
-
 const app = require('./app');
 const port = app.get('port');
 const server = app.listen(port);

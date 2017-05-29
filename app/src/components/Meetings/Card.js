@@ -2,15 +2,19 @@ import React from 'react';
 import styled from 'styled-components';
 import Grid from '../Grid';
 
+import { Link } from 'react-router-dom';
+
 var d = new Date("October 13, 2014 11:13:00");
 
-export default ({ text, date = d, group }) => (
-  <StyledGrid xs={1} sm={1/2} md={1/3} lg={1/4}>
-    <Card group={group}>
-      <Text>{group.name}</Text>
-      <Text>{date.toString()}</Text>
-    </Card>
-  </StyledGrid>
+export default ({ id, text, date = d, group }) => (
+  <Link to={ '/meetings/' + id }>
+    <StyledGrid xs={1} sm={1/2} md={1/3} lg={1/4}>
+      <Card group={group}>
+        <Text>{group.name}</Text>
+        <Text>{date.toString()}</Text>
+      </Card>
+    </StyledGrid>
+  </Link>
 )
 
 const StyledGrid = styled(Grid)`

@@ -43,13 +43,13 @@ app.configure(hooks());
 app.configure(postgres);
 app.configure(rest());
 app.configure(socketio(function(io) {
-    // Registering Socket.io middleware
-    io.use(function (socket, next) {
-      // Exposing a request property to services and hooks
-      socket.feathers.referrer = socket.request.referrer;
-      next();
-    });
-  }));
+  // Registering Socket.io middleware
+  io.use(function (socket, next) {
+    // Exposing a request property to services and hooks
+    socket.feathers.referrer = socket.request.referrer;
+    next();
+  });
+}));
 
 app.use((req, res, next) => {
   req.feathers.cookies = req.cookies;

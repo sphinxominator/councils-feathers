@@ -15,7 +15,7 @@ const MeetingsPure = ({ data: { meetings } = [], activeGroup }) => (
       { meetings.filter(({ group }) => (
         !activeGroup || group.id === activeGroup
       )).map(({ id, text, group }) => (
-        <MeetingCard key={id} text={text} group={group} />
+        <MeetingCard key={id} id = {id} text={text} group={group} />
       )) }
     </NegativeMargins>
   </MeetingsList>
