@@ -9,36 +9,79 @@ import { MeetingQuery } from '../../queries';
 import displayLoadingState from '../Loading';
 
 const PagePure = ({ data: { meeting } }) => (
-  <Link to='/meetings'>
+  <Background>
+    <CloseLink to='/meetings' />
     <Modal>
-      <Page color={meeting.group.color}>
-        <h1>{meeting.id} {meeting.text}</h1>
-      </Page>
+      <Meeting color={meeting.group.color}>
+        <h2>{meeting.group.name} - {meeting.id}</h2>
+      </Meeting>
+      <Attendance>
+        <h3>Ingen fremmødte</h3>
+      </Attendance>
     </Modal>
-  </Link>
+  </Background>
 );
 
-const Page = styled.div`
-  max-width: 40em;
-  position: relative;
-  margin: 0 auto;
-  color: white;
-  background-color: ${props => props.color};
-
-  z-index: 100;
+const Background = styled.div`
+  align-items: center;
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.2); /* Black w/ opacity */
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Full height */
+  justify-content: center;
+  left: 0;
+  overflow: auto; /* Enable scroll if needed */
+  position: fixed; /* Stay in place */
+  top: 0;
+  width: 100%; /* Full width */
+  z-index: 1; /* Sit on top */
 `
 
 const Modal = styled.div`
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  align-items: center;
+  box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+  display: flex;
+  flex-direction: column;
+  min-height: 20rem;
+  max-width: 40em;
+  width: 100%;
+  z-index: 100;
 `
+
+const Meeting = styled.div`
+  border-radius: ${props => props.theme.rounding} ${props => props.theme.rounding} 0 0 ;
+  flex-grow: 2;
+  background-color: ${props => props.color};
+  color: white;
+  display: flex;
+  justify-content: center;
+  min-height: 5rem;
+  position: relative;
+  width: 100%;
+
+`
+
+const Attendance = styled.div`
+  border-radius: 0 0 ${props => props.theme.rounding} ${props => props.theme.rounding};
+  flex-grow: 1;
+  min-height: 3rem;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  background-color: hsl(0,0%,95%);
+`
+
+const CloseLink = styled(Link)`
+  position: absolute;
+  display: block;
+  height: 100%;
+  width: 100%;
+  text-decoration: none;
+`;
+
+
 
 export default compose(
   graphql(MeetingQuery, {
