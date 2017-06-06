@@ -1,10 +1,15 @@
 import React from 'react';
-//import { LoginButton } from './components/Auth';
+import { LoginButton } from './Auth';
 import styled from 'styled-components';
 
-export default () => (
+import { connect } from 'react-redux';
+
+const mapStateToProps = ({ auth }) => ({ auth });
+
+const HeaderPure = ({auth}) => (
   <Header>
-    
+    <LoginButton />
+    { auth.email }
   </Header>
 );
 
@@ -16,3 +21,5 @@ const Header = styled.div`
   color: white;
   text-align: center;
 `
+
+export default connect(mapStateToProps)(HeaderPure);

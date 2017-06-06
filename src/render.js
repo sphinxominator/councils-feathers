@@ -9,7 +9,7 @@ import { ApolloClient, createNetworkInterface, ApolloProvider, renderToStringWit
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import { ServerStyleSheet } from 'styled-components';
-import { groups as groupsReducers } from '../app/src/reducers'
+import { groups as groupsReducers, auth as authReducer } from '../app/src/reducers'
 
 import App from '../app/src/App';
 
@@ -48,9 +48,12 @@ export default async (req, res) => {
   const store = createStore(
     combineReducers({
       apollo: client.reducer(),
-      groups: groupsReducers
+      groups: groupsReducers,
+      auth: authReducer
     }),
-    {}, // initial state
+    {
+      auth: req.feathers.payload
+    }, // initial state
     compose(
         applyMiddleware(client.middleware()),
     )
@@ -69,7 +72,10 @@ export default async (req, res) => {
   );
 
   renderToStringWithData(app).then((content) => {
-    const initialState = formattedState({'apollo': client.getInitialState() });
+    const initialState = formattedState({
+      auth: req.feathers.payload,
+      apollo: client.getInitialState()
+    });
     const styles = sheet.getStyleTags();
     const markup = injectVariables(htmlData, { content, styles, devScript, initialState });
     res.status(200);

@@ -6,7 +6,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { ApolloClient,  ApolloProvider, createNetworkInterface } from 'react-apollo';
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
-import { groups as groupsReducers } from './reducers';
+import { groups as groupsReducers, auth as authReducer } from './reducers';
 
 import App from './App';
 
@@ -24,7 +24,8 @@ const initialState = window.__INITIAL_STATE__;
 const store = createStore(
   combineReducers({
     apollo: client.reducer(),
-    groups: groupsReducers
+    groups: groupsReducers,
+    auth: authReducer
   }),
   initialState,
   compose(

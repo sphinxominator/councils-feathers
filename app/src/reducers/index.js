@@ -18,3 +18,11 @@ export function groups(state = initialState, action) {
       return state;
   }
 }
+
+const initialAuthState = Immutable({
+  auth: null
+})
+
+export function auth(state = initialAuthState, action) {
+  return state;
+}
