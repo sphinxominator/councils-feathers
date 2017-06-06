@@ -8,12 +8,17 @@ import { Link } from 'react-router-dom';
 import { MeetingQuery } from '../../queries';
 import displayLoadingState from '../Loading';
 
+import media from '../../mediaQueries';
+
 const PagePure = ({ data: { meeting } }) => (
   <Background>
-    <CloseLink to='/meetings' />
+    <CloseFullscreen to='/meetings' />
     <Modal>
       <Meeting color={meeting.group.color}>
-        <h2>{meeting.group.name} - {meeting.id}</h2>
+        <Title>{meeting.group.name} - {meeting.id}</Title>
+        <CloseButton to='/meetings' >
+          <CrossIcon />
+        </CloseButton>
       </Meeting>
       <Attendance>
         <h3>Ingen fremmødte</h3>
@@ -43,10 +48,19 @@ const Modal = styled.div`
   box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
   display: flex;
   flex-direction: column;
-  min-height: 20rem;
+  min-height: 100%;
   max-width: 40em;
   width: 100%;
   z-index: 100;
+
+  ${media.tablet`
+    min-height: 20rem;
+  `}
+`
+
+const Title = styled.h2`
+  margin-top: 1.5rem;
+  font-size: 1.7rem;
 `
 
 const Meeting = styled.div`
@@ -59,7 +73,6 @@ const Meeting = styled.div`
   min-height: 5rem;
   position: relative;
   width: 100%;
-
 `
 
 const Attendance = styled.div`
@@ -73,7 +86,7 @@ const Attendance = styled.div`
   background-color: hsl(0,0%,95%);
 `
 
-const CloseLink = styled(Link)`
+const CloseFullscreen = styled(Link)`
   position: absolute;
   display: block;
   height: 100%;
@@ -81,7 +94,24 @@ const CloseLink = styled(Link)`
   text-decoration: none;
 `;
 
+const CloseButton = styled(Link)`
+  position: absolute;
+  right: .25rem;
+  top: .25rem;
+  text-decoration: none;
 
+  svg {
+    height: 1.7rem;
+    width: 1.7rem;
+  }
+`;
+
+
+const CrossIcon = () => (
+  <svg enableBackground="new 0 0 100 100" version="1.1" viewBox="0 0 100 100" >
+    <polygon fill="#010101" points="77.6,21.1 49.6,49.2 21.5,21.1 19.6,23 47.6,51.1 19.6,79.2 21.5,81.1 49.6,53 77.6,81.1 79.6,79.2 51.5,51.1 79.6,23 "/>
+  </svg>
+);
 
 export default compose(
   graphql(MeetingQuery, {

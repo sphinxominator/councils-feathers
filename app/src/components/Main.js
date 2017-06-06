@@ -8,7 +8,6 @@ import { GroupsForm, GroupsList } from './Groups';
 
 const MeetingsContainer = () => (
   <Container>
-    <MeetingsForm />
     <MeetingsList />
     <Route exact path='/meetings/:id' component={MeetingsPage} />
   </Container>
@@ -22,6 +21,7 @@ const UsersContainer = () => (
 
 export default () => (
   <Main>
+    <MeetingsForm />
     <GroupsForm />
     <GroupsList />
     <Route exact path='/' component={MeetingsContainer} />

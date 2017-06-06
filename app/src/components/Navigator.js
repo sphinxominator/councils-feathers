@@ -3,6 +3,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+import media from '../mediaQueries';
+
 export default () => (
   <Navigator>
     <Link to='/meetings'>
@@ -15,7 +17,7 @@ export default () => (
 );
 
 const Navigator = styled.div`
-  background-color: ${props => props.theme.primary};
+  background-color: hsl(0,0%,95%);
   display: flex;
   bottom: 0;
   padding: 1rem;
@@ -23,6 +25,13 @@ const Navigator = styled.div`
   justify-content: center;
   width: 100%;
   position: fixed;
+
+  box-shadow: 0 -3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+
+  ${media.tablet`
+    background-color: transparent;
+    box-shadow: none;
+  `}
 `
 
 const Button = styled.span`
