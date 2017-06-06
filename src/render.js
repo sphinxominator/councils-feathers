@@ -4,12 +4,11 @@ import React from 'react';
 import path from 'path';
 import fs from 'fs';
 
-import { renderToStaticMarkup, renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 import { ApolloClient, createNetworkInterface, ApolloProvider, renderToStringWithData } from 'react-apollo';
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
-import { ServerStyleSheet, StyleSheetManager } from 'styled-components';
+import { ServerStyleSheet } from 'styled-components';
 import { groups as groupsReducers } from '../app/src/reducers'
 
 import App from '../app/src/App';
@@ -89,6 +88,6 @@ const formattedState = (state) => (`
 
 const injectVariables = (html, variables = {}) => (
   Object.keys(variables).reduce( (acc, key) => (
-    acc.replace(`{{${key}}}`, variables[key])
+    acc.replace(`<replaceme id="{{${key}}}"/>`, variables[key])
   ), html )
 );
