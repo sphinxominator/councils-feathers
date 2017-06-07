@@ -59,7 +59,7 @@ app.use((req, res, next) => {
 
 app.configure(services);
 
-app.use('/', auth.express.authenticate('jwt'), renderApp);
+app.use('/', renderApp);
 
 // Configure middleware (see `middleware/index.js`) - always has to be last
 app.configure(middleware);

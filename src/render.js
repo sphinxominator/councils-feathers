@@ -30,6 +30,9 @@ export default async (req, res) => {
     })
   });
 
+  const user = await req.app.authenticate('jwt',{})(req).then(result => ( result.data.payload ));
+  console.log(user)
+
   const client = new ApolloClient({
     ssrMode: true,
     // Remember that this is the interface the SSR server will use to connect to the
@@ -52,12 +55,14 @@ export default async (req, res) => {
       auth: authReducer
     }),
     {
-      auth: req.feathers.payload
+      auth: user
     }, // initial state
     compose(
         applyMiddleware(client.middleware()),
     )
   );
+
+  //console.log(req.user);
 
   const sheet = new ServerStyleSheet();
 
@@ -73,7 +78,7 @@ export default async (req, res) => {
 
   renderToStringWithData(app).then((content) => {
     const initialState = formattedState({
-      auth: req.feathers.payload,
+      auth: user,
       apollo: client.getInitialState()
     });
     const styles = sheet.getStyleTags();
