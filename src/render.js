@@ -30,9 +30,7 @@ export default async (req, res) => {
     })
   });
 
-  const user = await req.app.authenticate('jwt')(req).then(result => (
-    result.data ? result.data.payload : null
-  ));
+  console.log(req.user);
 
   const client = new ApolloClient({
     ssrMode: true,
@@ -56,7 +54,7 @@ export default async (req, res) => {
       auth: authReducer
     }),
     {
-      auth: user
+      auth: req.user
     }, // initial state
     compose(
         applyMiddleware(client.middleware()),
@@ -79,7 +77,7 @@ export default async (req, res) => {
 
   renderToStringWithData(app).then((content) => {
     const initialState = formattedState({
-      auth: user,
+      auth: req.user,
       apollo: client.getInitialState()
     });
     const styles = sheet.getStyleTags();

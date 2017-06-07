@@ -1,24 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import isNode from 'detect-node';
 
-const Auth0Lock = !isNode ? require('auth0-lock').default : null;
+import isNode from 'detect-node';
+import auth0 from 'auth0-js';
 
 export class AuthProvider extends React.Component {
   state = { lock: null }
 
   componentDidMount(){
-    if(Auth0Lock){
-      let lock = new Auth0Lock(process.env.REACT_APP_AUTH0_CLIENT_ID, process.env.REACT_APP_AUTH0_DOMAIN, {
-        auth: {
-          redirectUrl: process.env.REACT_APP_URI + '/auth/callback',
-          responseType: 'code',
-          params: {
-            scope: 'openid email'
-          }
-        }
-      });
+    if(!isNode){
+      let lock = new auth0.WebAuth({
+        clientID: process.env.REACT_APP_AUTH0_CLIENT_ID,
+        domain: process.env.REACT_APP_AUTH0_DOMAIN,
+      })
 
       this.setState({ lock })
     }
@@ -41,8 +36,16 @@ AuthProvider.childContextTypes = {
   lock: PropTypes.object
 }
 
+const authorize = (lock) => {
+  lock.authorize({
+    connection: 'google-oauth2',
+    redirectUri: process.env.REACT_APP_URI + '/auth/callback',
+    responseType: 'token'
+  })
+}
+
 export const LoginButton = ({ label = 'Login' }, { lock }) => (
-  <Button onClick={() => lock && lock.show() }> { label } </Button>
+  <Button onClick={() => authorize(lock) }> { label } </Button>
 )
 
 LoginButton.contextTypes = {

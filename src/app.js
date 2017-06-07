@@ -58,7 +58,19 @@ app.use((req, res, next) => {
 
 app.configure(services);
 
-app.use('/', renderApp);
+const populateUser = async (req, res, next) => {
+  const result = await req.app.authenticate('jwt')(req);
+  let user = null;
+
+  if(result.data && result.data.payload) {
+    user = await req.app.service('users').get(result.data.payload.sub, {});
+  }
+
+  req.user = user;
+  next();
+}
+
+app.use('/', populateUser, renderApp);
 
 // Configure middleware (see `middleware/index.js`) - always has to be last
 app.configure(middleware);
