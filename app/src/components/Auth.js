@@ -10,9 +10,9 @@ export class AuthProvider extends React.Component {
 
   componentDidMount(){
     if(Auth0Lock){
-      let lock = new Auth0Lock('B1Y0w8pMQ9LXK5REYBigK06PGvzqdCK0', 'councils.eu.auth0.com', {
+      let lock = new Auth0Lock(process.env.REACT_APP_AUTH0_CLIENT_ID, process.env.REACT_APP_AUTH0_DOMAIN, {
         auth: {
-          redirectUrl: 'http://localhost:3001/auth/callback',
+          redirectUrl: process.env.REACT_APP_URI + '/auth/callback',
           responseType: 'code',
           params: {
             scope: 'openid email'
