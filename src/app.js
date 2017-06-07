@@ -14,7 +14,6 @@ const configuration = require('feathers-configuration');
 const hooks = require('feathers-hooks');
 const rest = require('feathers-rest');
 const socketio = require('feathers-socketio');
-const auth = require('feathers-authentication');
 
 const express = require('express');
 

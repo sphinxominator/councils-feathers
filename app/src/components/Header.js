@@ -9,7 +9,7 @@ const mapStateToProps = ({ auth }) => ({ auth });
 const HeaderPure = ({auth}) => (
   <Header>
     <LoginButton />
-    { auth.email }
+    { auth && auth.email }
   </Header>
 );
 
