@@ -30,8 +30,9 @@ export default async (req, res) => {
     })
   });
 
-  const user = await req.app.authenticate('jwt',{})(req).then(result => ( result.data.payload ));
-  console.log(user)
+  const user = await req.app.authenticate('jwt')(req).then(result => (
+    result.data ? result.data.payload : null
+  ));
 
   const client = new ApolloClient({
     ssrMode: true,
