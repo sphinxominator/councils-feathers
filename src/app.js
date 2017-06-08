@@ -1,4 +1,5 @@
 import renderApp from './render';
+import proxy from 'http-proxy-middleware';
 
 const path = require('path');
 const favicon = require('serve-favicon');
@@ -63,11 +64,19 @@ const populateUser = async (req, res, next) => {
   let user = null;
 
   if(result.data && result.data.payload) {
-    user = await req.app.service('users').get(result.data.payload.sub, {});
+    user = await req.app.service('api/users').get(result.data.payload.sub, {});
   }
 
   req.user = user;
   next();
+}
+
+if(process.env.NODE_ENV !== 'production'){
+  app.use(proxy('/sockjs-node', {
+    target: 'http://localhost:3000',
+    changeOrigin: true,
+    ws: true
+  }));
 }
 
 app.use('/', populateUser, renderApp);
