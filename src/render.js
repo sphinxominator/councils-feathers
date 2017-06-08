@@ -30,8 +30,6 @@ export default async (req, res) => {
     })
   });
 
-  console.log(req.user);
-
   const client = new ApolloClient({
     ssrMode: true,
     // Remember that this is the interface the SSR server will use to connect to the
@@ -42,7 +40,7 @@ export default async (req, res) => {
         credentials: 'same-origin',
         // transfer request headers to networkInterface so that they're accessible to proxy server
         // Addresses this issue: https://github.com/matthew-andrews/isomorphic-fetch/issues/83
-        headers: req.headers,
+        headers: req.headers
       },
     }),
   });

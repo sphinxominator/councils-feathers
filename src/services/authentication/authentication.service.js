@@ -16,7 +16,8 @@ module.exports = function () {
 
   app.configure(jwt({
     jwtFromRequest: cookieExtractor,
-    secretOrKey: process.env.AUTH0_CLIENT_SECRET
+    secretOrKey: process.env.AUTH0_CLIENT_SECRET,
+    service: 'api/users'
   }));
 
   app.passport.use(new Auth0Strategy({

@@ -16,10 +16,10 @@ module.exports = function () {
   };
 
   // Initialize our service with any options it requires
-  app.use('/groups', createService(options));
+  app.use('/api/groups', createService(options));
 
   // Get our initialized service so that we can register hooks and filters
-  const service = app.service('groups');
+  const service = app.service('api/groups');
 
   service.hooks(hooks);
 

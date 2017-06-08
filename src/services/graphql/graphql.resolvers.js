@@ -1,7 +1,7 @@
 export default function() {
   const app = this;
-  const Meeting = app.service('meetings');
-  const Group = app.service('groups');
+  const Meeting = app.service('api/meetings');
+  const Group = app.service('api/groups');
 
   // The root provides a resolver function for each API endpoint
   return {
