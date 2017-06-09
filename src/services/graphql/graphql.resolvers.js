@@ -15,20 +15,16 @@ export default function() {
         return Meeting.get(id, context);
       },
       meetings(root, args, context) {
-        const params = context.merge({
-          query: {
-            $sort: { id: -1 }
-          }
-        })
-        return Meeting.find(params).then(meetings => meetings.data);
+        context.query = {
+          $sort : { id: -1 }
+        }
+        return Meeting.find(context).then(meetings => meetings.data);
       },
       groups(root, args, context) {
-        const params = context.merge({
-          query: {
-            $sort: { id: -1 }
-          }
-        })
-        return Group.find(params).then(groups => groups.data);
+        context.query = {
+          $sort : { id: -1 }
+        }
+        return Group.find(context).then(groups => groups.data);
       }
     },
     RootMutation: {

@@ -1,6 +1,5 @@
 import { graphqlExpress, graphiqlExpress } from 'graphql-server-express';
-import { makeExecutableSchema, addMockFunctionsToSchema } from 'graphql-tools';
-import Immutable from 'seamless-immutable';
+import { makeExecutableSchema } from 'graphql-tools';
 
 import Resolvers from './graphql.resolvers';
 import Schema from './graphql.schema';
@@ -18,7 +17,7 @@ module.exports = function () {
     return {
       schema: executableSchema,
       graphiql: true,
-      context: Immutable({ provider, cookies })
+      context: { provider, cookies }
     }
   }));
 
