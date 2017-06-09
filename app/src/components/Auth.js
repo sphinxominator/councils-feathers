@@ -54,5 +54,6 @@ LoginButton.contextTypes = {
 
 const Button = styled.button`
   background-color: blue;
+  border: 1px solid black;
   color: white;
 `

@@ -27,7 +27,6 @@ module.exports = function () {
       callbackURL: process.env.URI + '/auth/callback'
     },
     function(accessToken, refreshToken, extraParams, profile, done) {
-      console.log(extraParams);
       return done(null, { profile, token: extraParams.id_token });
     }
   ));
