@@ -23,7 +23,7 @@
     "heroku-postbuild": "cd app && yarn install && yarn build",
     "knex": "knex",
     "mocha": "mocha test/ --recursive",
-    "prettier": "find ./src/**/*.js | xargs prettier --single-quote --no-semi --jsx-bracket-same-line --write ",
+    "prettier": "find ./src ./app/src -name '*.js' | xargs prettier --single-quote --no-semi --jsx-bracket-same-line --write ",
     "start:app": "cd app && yarn start",
     "start:dev": "concurrently \"yarn run start:server\" \" yarn run start:app  \" ",
     "start:server:dev": "NODE_ENV=development nodemon src/index.js --exec babel-node",

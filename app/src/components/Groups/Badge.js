@@ -1,18 +1,17 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from 'react'
+import styled from 'styled-components'
 
-
-export default ({ name, color, id, onClick, active }) => (
-  <Badge  onClick={() => onClick(id)}>
-    <Letter color={color} active={active} >
-      { name.charAt(0) }
+export default ({ name, color, id, onClick, active }) =>
+  <Badge onClick={() => onClick(id)}>
+    <Letter color={color} active={active}>
+      {name.charAt(0)}
     </Letter>
-    { name }
+    {name}
   </Badge>
-)
 
 const Letter = styled.span`
-  background-color: ${props => props.active ? props.color : 'hsla(0,0%,78%,1)' };
+  background-color: ${props =>
+    props.active ? props.color : 'hsla(0,0%,78%,1)'};
   border-radius: ${props => props.theme.rounding};
   color: white;
   display: inline-flex;
@@ -26,7 +25,7 @@ const Letter = styled.span`
 
 const Badge = styled.div`
   align-items: center;
-  background-color: hsla(0,0%,88%,1);
+  background-color: hsla(0, 0%, 88%, 1);
   border-radius: ${props => props.theme.rounding};
   color: black;
   display: flex;
@@ -37,7 +36,7 @@ const Badge = styled.div`
   text-transform: capitalize;
 
   &:hover {
-    background-color: hsla(0,0%,78%,1);
+    background-color: hsla(0, 0%, 78%, 1);
     cursor: pointer;
   }
 `

@@ -1,7 +1,7 @@
 export default function() {
-  const app = this;
-  const Meeting = app.service('api/meetings');
-  const Group = app.service('api/groups');
+  const app = this
+  const Meeting = app.service('api/meetings')
+  const Group = app.service('api/groups')
 
   // The root provides a resolver function for each API endpoint
   return {
@@ -12,27 +12,27 @@ export default function() {
     },
     RootQuery: {
       meeting(root, { id }, context) {
-        return Meeting.get(id, context);
+        return Meeting.get(id, context)
       },
       meetings(root, args, context) {
         context.query = {
-          $sort : { id: -1 }
+          $sort: { id: -1 }
         }
-        return Meeting.find(context).then(meetings => meetings.data);
+        return Meeting.find(context).then(meetings => meetings.data)
       },
       groups(root, args, context) {
         context.query = {
-          $sort : { id: -1 }
+          $sort: { id: -1 }
         }
-        return Group.find(context).then(groups => groups.data);
+        return Group.find(context).then(groups => groups.data)
       }
     },
     RootMutation: {
       createMeeting(root, { meeting }, context) {
-        return Meeting.create(meeting, context);
+        return Meeting.create(meeting, context)
       },
       createGroup(root, { group }, context) {
-        return Group.create(group, context);
+        return Group.create(group, context)
       }
     }
   }

@@ -1,23 +1,22 @@
-import React from 'react';
+import React from 'react'
 
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import { Link } from 'react-router-dom'
+import styled from 'styled-components'
 
-import media from '../mediaQueries';
+import media from '../mediaQueries'
 
-export default () => (
+export default () =>
   <Navigator>
-    <Link to='/meetings'>
+    <Link to="/meetings">
       <Button>Meetings</Button>
     </Link>
-    <Link to='/users'>
+    <Link to="/users">
       <Button>Users</Button>
     </Link>
   </Navigator>
-);
 
 const Navigator = styled.div`
-  background-color: hsl(0,0%,95%);
+  background-color: hsl(0, 0%, 95%);
   display: flex;
   bottom: 0;
   padding: 1rem;
@@ -26,14 +25,12 @@ const Navigator = styled.div`
   width: 100%;
   position: fixed;
 
-  box-shadow: 0 -3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 
   ${media.tablet`
     background-color: transparent;
     box-shadow: none;
-  `}
+  `};
 `
 
-const Button = styled.span`
-  margin: 0 1rem;
-`
+const Button = styled.span`margin: 0 1rem;`

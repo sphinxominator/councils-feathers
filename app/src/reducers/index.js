@@ -1,21 +1,21 @@
-import Immutable from 'seamless-immutable';
-import { SET_ACTIVE_GROUP } from '../actions';
+import Immutable from 'seamless-immutable'
+import { SET_ACTIVE_GROUP } from '../actions'
 
 const initialState = Immutable({
-  activeGroup: "1"
+  activeGroup: '1'
 })
 
 export function groups(state = initialState, action) {
-  switch(action.type) {
+  switch (action.type) {
     case SET_ACTIVE_GROUP:
-      const { groupId } = action;
+      const { groupId } = action
 
       return state.merge({
         activeGroup: state.activeGroup !== groupId ? groupId : null
-      });
+      })
 
     default:
-      return state;
+      return state
   }
 }
 
@@ -24,5 +24,5 @@ const initialAuthState = Immutable({
 })
 
 export function auth(state = initialAuthState, action) {
-  return state;
+  return state
 }

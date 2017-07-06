@@ -1,5 +1,4 @@
-import { gql } from 'react-apollo';
-
+import { gql } from 'react-apollo'
 
 // Queries
 export const MeetingsQuery = gql`
@@ -54,4 +53,4 @@ export const CreateMeeting = gql`
       }
     }
   }
-`;
+`

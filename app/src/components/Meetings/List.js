@@ -1,29 +1,28 @@
-import React from 'react';
+import React from 'react'
 
-import { pure, compose } from 'recompose';
-import { graphql } from 'react-apollo';
-import { connect } from 'react-redux';
-import styled from 'styled-components';
+import { pure, compose } from 'recompose'
+import { graphql } from 'react-apollo'
+import { connect } from 'react-redux'
+import styled from 'styled-components'
 
-import { MeetingsQuery } from '../../queries';
-import displayLoadingState from '../Loading';
-import MeetingCard from './Card';
+import { MeetingsQuery } from '../../queries'
+import displayLoadingState from '../Loading'
+import MeetingCard from './Card'
 
-const MeetingsPure = ({ data: { meetings } = [], activeGroup }) => (
+const MeetingsPure = ({ data: { meetings } = [], activeGroup }) =>
   <MeetingsList>
     <NegativeMargins>
-      { meetings.filter(({ group }) => (
-        !activeGroup || group.id === activeGroup
-      )).map(({ id, text, group }) => (
-        <MeetingCard key={id} id = {id} text={text} group={group} />
-      )) }
+      {meetings
+        .filter(({ group }) => !activeGroup || group.id === activeGroup)
+        .map(({ id, text, group }) =>
+          <MeetingCard key={id} id={id} text={text} group={group} />
+        )}
     </NegativeMargins>
   </MeetingsList>
-);
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   activeGroup: state.groups.activeGroup
-});
+})
 
 const MeetingsList = styled.div`
   display: flex;
@@ -39,4 +38,4 @@ export default compose(
   graphql(MeetingsQuery),
   displayLoadingState,
   pure
-)(MeetingsPure);
+)(MeetingsPure)

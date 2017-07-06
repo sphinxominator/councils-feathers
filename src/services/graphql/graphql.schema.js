@@ -43,4 +43,4 @@ export default `
     query: RootQuery
     mutation: RootMutation
   }
-`;
+`

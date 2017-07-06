@@ -1,22 +1,23 @@
-import React from 'react';
-import { LoginButton } from './Auth';
-import styled from 'styled-components';
+import React from 'react'
+import { LoginButton } from './Auth'
+import styled from 'styled-components'
 
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
 
-const mapStateToProps = ({ auth }) => ({ auth });
+const mapStateToProps = ({ auth }) => ({ auth })
 
-const HeaderPure = ({auth}) => (
+const HeaderPure = ({ auth }) =>
   <Header>
     <LoginButton />
-    { auth && auth.name &&
+    {auth &&
+      auth.name &&
       <div>
-        <h2>{auth.name}</h2>
-        <ProfilePicture src={auth.picture} alt='profile'/>
-      </div>
-    }
+        <h2>
+          {auth.name}
+        </h2>
+        <ProfilePicture src={auth.picture} alt="profile" />
+      </div>}
   </Header>
-);
 
 const Header = styled.div`
   background-color: transparent;
@@ -34,4 +35,4 @@ const ProfilePicture = styled.img`
   height: 50px;
 `
 
-export default connect(mapStateToProps)(HeaderPure);
+export default connect(mapStateToProps)(HeaderPure)

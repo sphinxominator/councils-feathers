@@ -1,34 +1,31 @@
-import React from 'react';
+import React from 'react'
 
-import { Route } from 'react-router-dom';
-import styled from 'styled-components';
+import { Route } from 'react-router-dom'
+import styled from 'styled-components'
 
-import { MeetingsForm, MeetingsList, MeetingsPage } from './Meetings';
-import { GroupsForm, GroupsList } from './Groups';
+import { MeetingsForm, MeetingsList, MeetingsPage } from './Meetings'
+import { GroupsForm, GroupsList } from './Groups'
 
-const MeetingsContainer = () => (
+const MeetingsContainer = () =>
   <Container>
     <MeetingsList />
-    <Route exact path='/meetings/:id' component={MeetingsPage} />
+    <Route exact path="/meetings/:id" component={MeetingsPage} />
   </Container>
-);
 
-const UsersContainer = () => (
+const UsersContainer = () =>
   <Container>
     <p>users</p>
   </Container>
-);
 
-export default () => (
+export default () =>
   <Main>
     <MeetingsForm />
     <GroupsForm />
     <GroupsList />
-    <Route exact path='/' component={MeetingsContainer} />
-    <Route path='/meetings' component={MeetingsContainer} />
-    <Route exact path='/users' component={UsersContainer} />
+    <Route exact path="/" component={MeetingsContainer} />
+    <Route path="/meetings" component={MeetingsContainer} />
+    <Route exact path="/users" component={UsersContainer} />
   </Main>
-);
 
 const Container = styled.div`
   flex-grow: 1;
