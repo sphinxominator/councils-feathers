@@ -1,17 +1,26 @@
 import React from 'react'
+import styled from 'styled-components'
 
 import { pure, compose, withState, withHandlers } from 'recompose'
 import { graphql } from 'react-apollo'
 import { connect } from 'react-redux'
-import styled from 'styled-components'
 
 import { MeetingsQuery, CreateMeeting } from '../../queries'
 
+import Modal from '../Modal'
+
 export const MeetingFormPure = ({ value, onSubmit, onChange }) =>
-  <form onSubmit={onSubmit}>
-    Meeting
-    <Input type="text" placeholder="text" onChange={onChange} />
-  </form>
+  <Modal locationOnClose="/meetings">
+    <form onSubmit={onSubmit}>
+      Meeting
+      <Input type="text" placeholder="text" onChange={onChange} />
+    </form>
+  </Modal>
+
+const Input = styled.input`
+  padding: .5rem;
+  margin: 1rem;
+`
 
 const submitProp = {
   props: ({ mutate }) => ({
@@ -41,21 +50,18 @@ const handlers = {
   },
   onSubmit: props => event => {
     event.preventDefault()
-    props.submit({
-      text: props.value,
-      groupId: props.activeGroup
-    })
+    props
+      .submit({
+        text: props.value,
+        groupId: props.activeGroup
+      })
+      .catch(error => console.log(error.message))
   }
 }
 
 const mapStateToProps = ({ groups }) => ({
   activeGroup: groups.activeGroup
 })
-
-const Input = styled.input`
-  padding: .5rem;
-  margin: 1rem;
-`
 
 export default compose(
   connect(mapStateToProps),

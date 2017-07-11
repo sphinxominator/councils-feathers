@@ -1,15 +1,20 @@
 import React from 'react'
 
-import { Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { MeetingsForm, MeetingsList, MeetingsPage } from './Meetings'
 import { GroupsForm, GroupsList } from './Groups'
 
+import ActionButton from './ActionButton'
+
 const MeetingsContainer = () =>
   <Container>
     <MeetingsList />
-    <Route exact path="/meetings/:id" component={MeetingsPage} />
+    <Switch>
+      <Route exact path="/meetings/new" component={MeetingsForm} />
+      <Route exact path="/meetings/:id" component={MeetingsPage} />
+    </Switch>
   </Container>
 
 const UsersContainer = () =>
@@ -19,12 +24,12 @@ const UsersContainer = () =>
 
 export default () =>
   <Main>
-    <MeetingsForm />
-    <GroupsForm />
     <GroupsList />
+    <Route exact path="/groups/new" component={GroupsForm} />
     <Route exact path="/" component={MeetingsContainer} />
     <Route path="/meetings" component={MeetingsContainer} />
     <Route exact path="/users" component={UsersContainer} />
+    <ActionButton />
   </Main>
 
 const Container = styled.div`

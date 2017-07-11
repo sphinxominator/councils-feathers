@@ -1,13 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
 
-export default ({ name, color, id, onClick, active }) =>
-  <Badge onClick={() => onClick(id)}>
-    <Letter color={color} active={active}>
-      {name.charAt(0)}
-    </Letter>
+const Badge = ({ name, color, id, onClick, active, showLetter }) =>
+  <Container onClick={() => onClick && onClick(id)}>
+    {showLetter &&
+      <Letter color={color} active={active}>
+        {name.charAt(0)}
+      </Letter>}
     {name}
-  </Badge>
+  </Container>
 
 const Letter = styled.span`
   background-color: ${props =>
@@ -23,7 +24,7 @@ const Letter = styled.span`
   width: 1rem;
 `
 
-const Badge = styled.div`
+const Container = styled.div`
   align-items: center;
   background-color: hsla(0, 0%, 88%, 1);
   border-radius: ${props => props.theme.rounding};
@@ -31,6 +32,7 @@ const Badge = styled.div`
   display: flex;
   margin: 0 .5rem .5rem 0;
   min-width: 6rem;
+  min-height: 2rem;
   padding-right: .5rem;
   position: relative;
   text-transform: capitalize;
@@ -42,5 +44,8 @@ const Badge = styled.div`
 `
 
 Badge.defaultProps = {
-  color: 'green'
+  color: 'green',
+  showLetter: true
 }
+
+export default Badge

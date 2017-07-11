@@ -6,17 +6,34 @@ import styled from 'styled-components'
 
 import { GroupsQuery } from '../../queries'
 
+import Modal from '../Modal'
+
 const GroupFormPure = ({ onSubmit, onChangeName, onChangeColor }) =>
-  <form onSubmit={onSubmit}>
-    Group
-    <Input required type="text" placeholder="name" onChange={onChangeName} />
-    <Select onChange={onChangeColor}>
-      <option value="#48ACF0">Lyseblå</option>
-      <option value="#B74F6F">Lilla</option>
-      <option value="#1C77C3">Mørkeblå</option>
-    </Select>
-    <input type="submit" value="submit" />
-  </form>
+  <Modal locationOnClose="/meetings">
+    <Container>
+      <form onSubmit={onSubmit}>
+        Ny gruppe
+        <Input
+          required
+          type="text"
+          placeholder="name"
+          onChange={onChangeName}
+        />
+        <Select onChange={onChangeColor}>
+          <option value="#48ACF0">Lyseblå</option>
+          <option value="#B74F6F">Lilla</option>
+          <option value="#1C77C3">Mørkeblå</option>
+        </Select>
+        <input type="submit" value="submit" />
+      </form>
+    </Container>
+  </Modal>
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+`
 
 GroupFormPure.defaultProps = {
   color: 'black'

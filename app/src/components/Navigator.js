@@ -3,16 +3,24 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
+import { GroupIcon, MeetingIcon } from './Icons'
+
 import media from '../mediaQueries'
 
 export default () =>
   <Navigator>
-    <Link to="/meetings">
-      <Button>Meetings</Button>
-    </Link>
-    <Link to="/users">
-      <Button>Users</Button>
-    </Link>
+    <StyledLink to="/meetings">
+      <Button>
+        <MeetingIcon />
+        Møder
+      </Button>
+    </StyledLink>
+    <StyledLink to="/users">
+      <Button>
+        <GroupIcon />
+        Grupper
+      </Button>
+    </StyledLink>
   </Navigator>
 
 const Navigator = styled.div`
@@ -33,4 +41,14 @@ const Navigator = styled.div`
   `};
 `
 
-const Button = styled.span`margin: 0 1rem;`
+const StyledLink = styled(Link)`
+  text-decoration: none;
+`
+
+const Button = styled.span`
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin: 0 1rem;
+  text-decoration: none;
+`

@@ -1,16 +1,14 @@
 import React from 'react'
+import styled from 'styled-components'
 
 import { pure, compose } from 'recompose'
-
-import { setActiveGroup } from '../../actions'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-
 import { graphql } from 'react-apollo'
+
+import { setActiveGroup } from '../../actions'
 import { GroupsQuery } from '../../queries'
 import displayLoadingState from '../Loading'
-
-import styled from 'styled-components'
 
 import Badge from './Badge'
 
@@ -28,17 +26,17 @@ const GroupsPure = ({ data: { groups }, activeGroup, setActiveGroup }) =>
     )}
   </GroupsList>
 
+const GroupsList = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`
+
 const mapStateToProps = ({ groups }) => ({
   activeGroup: groups.activeGroup
 })
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ setActiveGroup }, dispatch)
-
-const GroupsList = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-`
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),

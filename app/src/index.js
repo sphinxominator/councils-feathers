@@ -10,7 +10,11 @@ import {
 } from 'react-apollo'
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 import { Provider } from 'react-redux'
-import { groups as groupsReducers, auth as authReducer } from './reducers'
+import {
+  groups as groupsReducers,
+  auth as authReducer,
+  auth0 as auth0Reducer
+} from './reducers'
 
 import App from './App'
 
@@ -29,7 +33,8 @@ const store = createStore(
   combineReducers({
     apollo: client.reducer(),
     groups: groupsReducers,
-    auth: authReducer
+    auth: authReducer,
+    auth0: auth0Reducer
   }),
   initialState,
   compose(

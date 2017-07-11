@@ -20,8 +20,8 @@ const MeetingsPure = ({ data: { meetings } = [], activeGroup }) =>
     </NegativeMargins>
   </MeetingsList>
 
-const mapStateToProps = state => ({
-  activeGroup: state.groups.activeGroup
+const mapStateToProps = ({ groups }) => ({
+  activeGroup: groups.activeGroup
 })
 
 const MeetingsList = styled.div`

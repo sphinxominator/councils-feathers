@@ -1,40 +1,19 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-import isNode from 'detect-node'
-import auth0 from 'auth0-js'
+import { connect } from 'react-redux'
+import { withHandlers, compose, pure } from 'recompose'
 
-export class AuthProvider extends React.Component {
-  state = { lock: null }
+const LoginButtonPure = ({ onClick, label = 'Login' }) =>
+  <Button onClick={onClick}>
+    {' '}{label}{' '}
+  </Button>
 
-  componentDidMount() {
-    if (!isNode) {
-      let lock = new auth0.WebAuth({
-        clientID: process.env.REACT_APP_AUTH0_CLIENT_ID,
-        domain: process.env.REACT_APP_AUTH0_DOMAIN
-      })
-
-      this.setState({ lock })
-    }
-  }
-
-  getChildContext() {
-    return { lock: this.state.lock }
-  }
-
-  render() {
-    return (
-      <div>
-        {this.props.children}
-      </div>
-    )
-  }
-}
-
-AuthProvider.childContextTypes = {
-  lock: PropTypes.object
-}
+const Button = styled.button`
+  background-color: blue;
+  border: 1px solid black;
+  color: white;
+`
 
 const authorize = lock => {
   lock.authorize({
@@ -44,17 +23,10 @@ const authorize = lock => {
   })
 }
 
-export const LoginButton = ({ label = 'Login' }, { lock }) =>
-  <Button onClick={() => authorize(lock)}>
-    {' '}{label}{' '}
-  </Button>
-
-LoginButton.contextTypes = {
-  lock: PropTypes.object
-}
-
-const Button = styled.button`
-  background-color: blue;
-  border: 1px solid black;
-  color: white;
-`
+export const LoginButton = compose(
+  connect(({ auth0 }) => ({ lock: auth0.lock })),
+  withHandlers({
+    onClick: props => event => authorize(props.lock)
+  }),
+  pure
+)(LoginButtonPure)

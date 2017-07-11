@@ -1,5 +1,6 @@
 import Immutable from 'seamless-immutable'
 import { SET_ACTIVE_GROUP } from '../actions'
+export { default as auth0 } from './auth0'
 
 const initialState = Immutable({
   activeGroup: '1'
