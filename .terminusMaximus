@@ -1,0 +1,20 @@
+{
+  "errorHeight": 40,
+  "scripts": {
+    "node": {
+      "screensPerRow": 2,
+      "commands": [
+        {
+          "label": "frontend",
+          "command": "yarn run start:app",
+          "screenConfig": {}
+        },
+        {
+          "label": "backend",
+          "command": "yarn run start:server",
+          "screenConfig": {}
+        }
+      ]
+    }
+  }
+}

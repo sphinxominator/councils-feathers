@@ -25,7 +25,7 @@
     "mocha": "mocha test/ --recursive",
     "prettier": "find ./src ./app/src -name '*.js' | xargs prettier --single-quote --no-semi --jsx-bracket-same-line --write ",
     "start:app": "cd app && yarn start",
-    "start:dev": "concurrently \"yarn run start:server\" \" yarn run start:app  \" ",
+    "start:dev": "termax node",
     "start:server:dev": "NODE_ENV=development nodemon src/index.js --exec babel-node",
     "start:server": "NODE_ENV=development nodemon src/index.js --exec babel-node --ignore 'app/*.js'",
     "start": "NODE_ENV=production babel-node src/index.js",
@@ -81,6 +81,7 @@
     "winston": "^2.3.1"
   },
   "devDependencies": {
+    "@tww/terminus-maximus": "^2.0.0",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
     "babel-eslint": "7.2.3",
