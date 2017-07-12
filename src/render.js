@@ -15,8 +15,9 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 import { Provider } from 'react-redux'
 import { ServerStyleSheet } from 'styled-components'
 import {
-  groups as groupsReducers,
-  auth as authReducer
+  groups as groupsReducer,
+  auth as authReducer,
+  auth0 as auth0Reducer
 } from '../app/src/reducers'
 
 import App from '../app/src/App'
@@ -56,8 +57,9 @@ export default async (req, res) => {
   const store = createStore(
     combineReducers({
       apollo: client.reducer(),
-      groups: groupsReducers,
-      auth: authReducer
+      groups: groupsReducer,
+      auth: authReducer,
+      auth0: auth0Reducer
     }),
     {
       auth: req.user

@@ -1,7 +1,7 @@
 import auth0 from 'auth0-js'
 import isNode from 'detect-node'
 
-let lock = !isNode
+const lock = !isNode
   ? new auth0.WebAuth({
       clientID: process.env.REACT_APP_AUTH0_CLIENT_ID,
       domain: process.env.REACT_APP_AUTH0_DOMAIN
