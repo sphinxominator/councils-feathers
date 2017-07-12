@@ -4,27 +4,38 @@ import styled from 'styled-components'
 
 import { connect } from 'react-redux'
 
-import { branch, renderComponent, compose } from 'recompose'
+import { branch, renderNothing, compose } from 'recompose'
 
 const HeaderPure = () =>
   <Header>
-    Community
-    <ProfileContainer />
+    <Title>Community</Title>
+    <Right>
+      <Profile />
+      <LoginButton />
+    </Right>
   </Header>
 
 const Header = styled.div`
+  align-items: center;
   background-color: transparent;
   display: flex;
   flex-grow: 1;
   flex-basis: 20px;
   padding: 0px;
   color: black;
-  margin: 1rem auto;
+  margin: 0 auto;
   max-width: 60rem;
   width: 95%;
 `
+const Title = styled.h2`font-size: 2rem;`
 
-const Profile = ({ auth }) =>
+const Right = styled.div`
+  align-items: center;
+  margin-left: auto;
+  display: inline-flex;
+`
+
+const ProfilePure = ({ auth }) =>
   <StyledProfile>
     <h2>
       {auth.name}
@@ -33,16 +44,15 @@ const Profile = ({ auth }) =>
   </StyledProfile>
 
 const ProfilePicture = styled.img`
-  margin-left: auto;
   border-radius: 50%;
   width: 50px;
   height: 50px;
 `
 
-const ProfileContainer = compose(
+const Profile = compose(
   connect(({ auth }) => ({ auth })),
-  branch(props => props.auth && !props.auth.name, renderComponent(LoginButton))
-)(Profile)
+  branch(props => !props.auth, renderNothing)
+)(ProfilePure)
 
 const StyledProfile = styled.div`
   margin-left: auto;

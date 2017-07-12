@@ -16,6 +16,7 @@ const CreateGroupButton = () =>
 export default () =>
   <ActionButton>
     <Switch>
+      <Route exact path="/" component={CreateMeetingButton} />
       <Route path="/meetings" component={CreateMeetingButton} />
       <Route path="/users" component={CreateGroupButton} />
       <Route path="/groups" component={CreateGroupButton} />

@@ -9,7 +9,7 @@ import { GroupsQuery } from '../../queries'
 import Modal from '../Modal'
 
 const GroupFormPure = ({ onSubmit, onChangeName, onChangeColor }) =>
-  <Modal locationOnClose="/meetings">
+  <Modal locationOnClose="/groups">
     <Container>
       <form onSubmit={onSubmit}>
         Ny gruppe

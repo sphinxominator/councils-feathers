@@ -15,7 +15,7 @@ export default () =>
         Møder
       </Button>
     </StyledLink>
-    <StyledLink to="/users">
+    <StyledLink to="/groups">
       <Button>
         <GroupIcon />
         Grupper

@@ -10,7 +10,7 @@ import displayLoadingState from '../Loading'
 import Modal from '../Modal'
 
 const PagePure = ({ data: { meeting } }) =>
-  <Modal locationOnClose="/meetings">
+  <Modal locationOnClose="/groups">
     <Meeting color={meeting.group.color}>
       <Title>
         {meeting.group.name} - {meeting.id}

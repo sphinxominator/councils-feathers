@@ -4,15 +4,16 @@ import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { withHandlers, compose, pure } from 'recompose'
 
-const LoginButtonPure = ({ onClick, label = 'Login' }) =>
-  <Button onClick={onClick}>
-    {' '}{label}{' '}
+const LoginButtonPure = ({ onClick, auth }) =>
+  <Button onClick={onClick} logout={!!auth}>
+    {' '}{!!auth ? 'Log ud' : 'Log ind'}{' '}
   </Button>
 
 const Button = styled.button`
-  background-color: blue;
+  background-color: ${props => (props.logout ? 'purple' : 'blue')};
   border: 1px solid black;
   color: white;
+  height: 1.5rem;
 `
 
 const authorize = lock => {
@@ -24,9 +25,11 @@ const authorize = lock => {
 }
 
 export const LoginButton = compose(
-  connect(({ auth0 }) => ({ lock: auth0.lock })),
+  connect(({ auth0, auth }) => ({ lock: auth0.lock, auth })),
   withHandlers({
-    onClick: props => event => authorize(props.lock)
+    onClick: props => event => {
+      !props.auth ? authorize(props.lock) : console.log('loging out')
+    }
   }),
   pure
 )(LoginButtonPure)
