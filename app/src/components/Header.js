@@ -1,16 +1,20 @@
 import React from 'react'
-import { LoginButton } from './Auth'
 import styled from 'styled-components'
 
 import { connect } from 'react-redux'
-
 import { branch, renderNothing, compose } from 'recompose'
+
+import { LoginButton } from './Auth'
+import Menu from './Menu'
+import Dropdown from './Dropdown'
 
 const HeaderPure = () =>
   <Header>
     <Title>Community</Title>
     <Right>
-      <Profile />
+      <Dropdown content={<Menu />}>
+        <Profile />
+      </Dropdown>
       <LoginButton />
     </Right>
   </Header>
@@ -37,9 +41,6 @@ const Right = styled.div`
 
 const ProfilePure = ({ auth }) =>
   <StyledProfile>
-    <h2>
-      {auth.name}
-    </h2>
     <ProfilePicture src={auth.picture} alt="profile" />
   </StyledProfile>
 

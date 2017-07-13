@@ -2,7 +2,14 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { connect } from 'react-redux'
-import { withHandlers, withProps, compose, pure } from 'recompose'
+import {
+  withHandlers,
+  withProps,
+  compose,
+  pure,
+  branch,
+  renderNothing
+} from 'recompose'
 
 const LoginButtonPure = ({ onClick, isLogin = true }) =>
   <Button onClick={onClick}>
@@ -32,5 +39,6 @@ export const LoginButton = compose(
     }
   }),
   withProps(props => ({ isLogin: !props.auth })),
+  branch(props => !props.isLogin, renderNothing),
   pure
 )(LoginButtonPure)
