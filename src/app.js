@@ -36,9 +36,13 @@ app.use(compress())
 app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
+
 app.use(favicon(path.join(app.get('public'), 'favicon.ico')))
-// Host the public folder
 app.use('/static/js/', express.static(__dirname + '/../app/build/static/js'))
+app.use(
+  '/manifest.json',
+  express.static(__dirname + '/../app/public/manifest.json')
+)
 // Set up Plugins and providers .
 app.configure(hooks())
 app.configure(postgres)
