@@ -34,7 +34,7 @@ export default () =>
 
 const Container = styled.div`
   flex-grow: 1;
-  margin-bottom: 2rem;
+  margin-bottom: 4rem;
 `
 
 const Main = styled.div`

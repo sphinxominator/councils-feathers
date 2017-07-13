@@ -5,21 +5,62 @@ import { pure, compose, withState, withHandlers } from 'recompose'
 import { graphql } from 'react-apollo'
 import { connect } from 'react-redux'
 
-import { MeetingsQuery, CreateMeeting } from '../../queries'
+import displayLoadingState from '../Loading'
+import { MeetingsQuery, GroupsQuery, CreateMeeting } from '../../queries'
 
 import Modal from '../Modal'
 
-export const MeetingFormPure = ({ value, onSubmit, onChange }) =>
+export const MeetingFormPure = ({
+  data: { groups },
+  activeGroupIndex,
+  value,
+  onSubmit,
+  onChange,
+  onGroupSelectChange
+}) =>
   <Modal locationOnClose="/meetings">
-    <form onSubmit={onSubmit}>
-      Meeting
-      <Input type="text" placeholder="text" onChange={onChange} />
-    </form>
+    <Meeting color={groups[activeGroupIndex].color}>
+      <Select
+        value={activeGroupIndex}
+        onChange={onGroupSelectChange}
+        color={groups[activeGroupIndex].color}
+      >
+        {groups.map((group, i) =>
+          <Option value={i} key={group.id}>
+            {group.name}
+          </Option>
+        )}
+      </Select>
+      <Input type="button" value="Opret møde" onClick={onSubmit} />
+    </Meeting>
   </Modal>
 
 const Input = styled.input`
   padding: .5rem;
   margin: 1rem;
+`
+
+const Meeting = styled.div`
+  align-items: center;
+  background-color: ${props => props.color};
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  width: 100%;
+`
+
+const Select = styled.select`
+  background-color: ${props => props.color};
+  border: 0;
+  color: white;
+  font-size: 2rem;
+  margin-top: 1rem;
+`
+
+const Option = styled.option`
+  background-color: transparent;
+  border: 0;
+  color: white;
 `
 
 const submitProp = {
@@ -45,17 +86,18 @@ const submitProp = {
 }
 
 const handlers = {
-  onChange: props => event => {
-    props.updateValue(event.target.value)
-  },
   onSubmit: props => event => {
     event.preventDefault()
+    const group = props.data.groups[props.activeGroupIndex]
     props
       .submit({
-        text: props.value,
-        groupId: props.activeGroup
+        text: '',
+        groupId: group.id
       })
       .catch(error => console.log(error.message))
+  },
+  onGroupSelectChange: props => event => {
+    props.changeGroup(event.target.value)
   }
 }
 
@@ -63,10 +105,21 @@ const mapStateToProps = ({ groups }) => ({
   activeGroup: groups.activeGroup
 })
 
+const findActiveGroupIndex = props => {
+  const activeGroup = props.data.groups.findIndex(
+    group => group.id === props.activeGroup
+  )
+
+  // Let's just pick the first in the list
+  return activeGroup > -1 ? activeGroup : 0
+}
+
 export default compose(
   connect(mapStateToProps),
+  graphql(GroupsQuery),
   graphql(CreateMeeting, submitProp),
-  withState('value', 'updateValue', ''),
+  displayLoadingState,
+  withState('activeGroupIndex', 'changeGroup', findActiveGroupIndex),
   withHandlers(handlers),
   pure
 )(MeetingFormPure)

@@ -3,7 +3,6 @@ export default function() {
   const Meeting = app.service('api/meetings')
   const Group = app.service('api/groups')
 
-  // The root provides a resolver function for each API endpoint
   return {
     Meeting: {
       group(meeting, args, context) {
@@ -19,6 +18,9 @@ export default function() {
           $sort: { id: -1 }
         }
         return Meeting.find(context).then(meetings => meetings.data)
+      },
+      group(root, { id }, context) {
+        return Group.get(id, context)
       },
       groups(root, args, context) {
         context.query = {

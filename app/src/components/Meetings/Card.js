@@ -21,15 +21,15 @@ export default ({ id, text, date = d, group }) =>
   </Link>
 
 const StyledGrid = styled(Grid)`
-  margin-bottom: 1rem
+  margin-bottom: 1rem;
 `
 
 const Card = styled.div`
   border-radius: ${props => props.theme.rounding};
-  padding: 1rem;
   height: auto;
   background-color: ${props => props.color};
   color: white;
+  padding: 1rem;
   text-align: center;
 `
 

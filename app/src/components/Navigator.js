@@ -27,7 +27,7 @@ const Navigator = styled.div`
   background-color: hsl(0, 0%, 95%);
   display: flex;
   bottom: 0;
-  padding: 1rem;
+  padding: .25rem;
   align-items: center;
   justify-content: center;
   width: 100%;
@@ -38,6 +38,7 @@ const Navigator = styled.div`
   ${media.tablet`
     background-color: transparent;
     box-shadow: none;
+    margin-bottom: 1rem;
   `};
 `
 

@@ -29,6 +29,15 @@ export const MeetingQuery = gql`
   }
 `
 
+export const GroupQuery = gql`
+  query GroupQuery($id: Int!) {
+    group(id: $id) {
+      name
+      color
+    }
+  }
+`
+
 export const GroupsQuery = gql`
   query GroupsQuery {
     groups {

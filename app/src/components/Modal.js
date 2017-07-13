@@ -28,7 +28,7 @@ const Background = styled.div`
   position: fixed; /* Stay in place */
   top: 0;
   width: 100%; /* Full width */
-  z-index: 1; /* Sit on top */
+  z-index: 200; /* Sit on top */
 `
 
 const Content = styled.div`

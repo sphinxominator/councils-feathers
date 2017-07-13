@@ -9,6 +9,8 @@ import { MeetingsQuery } from '../../queries'
 import displayLoadingState from '../Loading'
 import MeetingCard from './Card'
 
+import media from '../../mediaQueries'
+
 const MeetingsPure = ({ data: { meetings } = [], activeGroup }) =>
   <MeetingsList>
     <NegativeMargins>
@@ -29,8 +31,11 @@ const MeetingsList = styled.div`
   flex-wrap: wrap;
 `
 const NegativeMargins = styled.div`
-  margin: 0 -${props => props.theme.gutter}px;
   width: 100%;
+
+  ${media.tablet`
+    margin: 0 -${props => props.theme.gutter}px;
+  `};
 `
 
 export default compose(
