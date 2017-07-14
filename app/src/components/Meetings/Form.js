@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { pure, compose, withState, withHandlers } from 'recompose'
 import { graphql } from 'react-apollo'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router'
 
 import displayLoadingState from '../Loading'
 import { MeetingsQuery, GroupsQuery, CreateMeeting } from '../../queries'
@@ -16,7 +17,8 @@ export const MeetingFormPure = ({
   value,
   onSubmit,
   onChange,
-  onGroupSelectChange
+  onGroupSelectChange,
+  createdMeeting
 }) =>
   <Modal locationOnClose="/meetings">
     <Meeting color={groups[activeGroupIndex].color}>
@@ -32,6 +34,7 @@ export const MeetingFormPure = ({
         )}
       </Select>
       <Input type="button" value="Opret møde" onClick={onSubmit} />
+      {createdMeeting && <Redirect to={`/meetings/${createdMeeting.id}`} />}
     </Meeting>
   </Modal>
 
@@ -53,8 +56,9 @@ const Select = styled.select`
   background-color: ${props => props.color};
   border: 0;
   color: white;
-  font-size: 2rem;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
+  font-size: 1.7rem;
+  font-weight: bold;
 `
 
 const Option = styled.option`
@@ -94,6 +98,7 @@ const handlers = {
         text: '',
         groupId: group.id
       })
+      .then(response => props.setCreatedMeeting(response.data.createMeeting))
       .catch(error => console.log(error.message))
   },
   onGroupSelectChange: props => event => {
@@ -120,6 +125,7 @@ export default compose(
   graphql(CreateMeeting, submitProp),
   displayLoadingState,
   withState('activeGroupIndex', 'changeGroup', findActiveGroupIndex),
+  withState('createdMeeting', 'setCreatedMeeting', null),
   withHandlers(handlers),
   pure
 )(MeetingFormPure)

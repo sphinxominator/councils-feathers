@@ -13,7 +13,7 @@ const PagePure = ({ data: { meeting } }) =>
   <Modal locationOnClose="/meetings">
     <Meeting color={meeting.group.color}>
       <Title>
-        {meeting.group.name} - {meeting.id}
+        {meeting.group.name}
       </Title>
     </Meeting>
     <Attendance>

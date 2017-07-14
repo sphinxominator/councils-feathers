@@ -4,18 +4,29 @@ import Grid from '../Grid'
 
 import { Link } from 'react-router-dom'
 
-var d = new Date('October 13, 2014 11:13:00')
+const d = '14. Januar, 2017'
+const t = '10:45'
 
-export default ({ id, text, date = d, group }) =>
+export default ({ id, text, date = d, time = t, group }) =>
   <Link to={`/meetings/${id}`}>
-    <StyledGrid xs={1} sm={1 / 2} md={1 / 3} lg={1 / 4}>
+    <StyledGrid xs={1} sm={1 / 2} md={1 / 3} lg={1 / 3}>
       <Card color={group.color}>
         <Text>
-          {group.name}
+          {date}
         </Text>
         <Text>
-          {date.toString()}
+          {time}
         </Text>
+        <Bottom>
+          <Text>
+            {group.name}
+          </Text>
+          <div>
+            <Dot />
+            <Dot />
+            <Dot />
+          </div>
+        </Bottom>
       </Card>
     </StyledGrid>
   </Link>
@@ -24,13 +35,40 @@ const StyledGrid = styled(Grid)`
   margin-bottom: 1rem;
 `
 
+const Dot = styled.span`
+  height: .75rem;
+  width: .75rem;
+  margin: 0 .125rem;
+  border-radius: 50%;
+  background-color: hsl(0, 0%, 95%);
+  color: black;
+  font-size: .5rem;
+
+  display: inline-block;
+`
+
+const Bottom = styled.div`
+  display: flex;
+  margin-top: auto;
+  align-items: center;
+  justify-content: space-between;
+`
+
 const Card = styled.div`
-  border-radius: ${props => props.theme.rounding};
-  height: auto;
   background-color: ${props => props.color};
+  border-radius: ${props => props.theme.rounding};
   color: white;
-  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  min-height: 10rem;
+  padding: 2rem 1rem .5rem 1rem;
   text-align: center;
+`
+
+const Text = styled.p`
+  font-size: 20px;
+  margin: 0 0 .5rem 0;
 `
 
 Card.defaultProps = {
@@ -38,8 +76,3 @@ Card.defaultProps = {
     primary: '#43b5ad'
   }
 }
-
-const Text = styled.p`
-  font-size: 20px;
-  margin: 1rem 0 1rem;
-`

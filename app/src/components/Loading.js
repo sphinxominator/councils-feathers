@@ -1,13 +1,10 @@
 import React from 'react'
-import { branch, renderComponent } from 'recompose'
+import { branch, renderNothing } from 'recompose'
 import styled from 'styled-components'
 
-const Loading = () => <Background>Loading</Background>
+//const Loading = () => <Background>Loading</Background>
 
-const displayLoadingState = branch(
-  props => props.data.loading,
-  renderComponent(Loading)
-)
+const displayLoadingState = branch(props => props.data.loading, renderNothing)
 
 const Background = styled.div`
   background-color: black;
