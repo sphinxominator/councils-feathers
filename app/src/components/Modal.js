@@ -18,7 +18,7 @@ export default ({ locationOnClose, children, narrow = false }) =>
 const Background = styled.div`
   align-items: center;
   background-color: rgb(0, 0, 0); /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.2); /* Black w/ opacity */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
   display: flex;
   flex-direction: column;
   height: 100%; /* Full height */
@@ -34,6 +34,8 @@ const Background = styled.div`
 const Content = styled.div`
   align-items: center;
   background-color: hsl(0, 0%, 95%);
+  border-radius: ${props => props.theme.rounding}
+    ${props => props.theme.rounding} 0 0;
   box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
   display: flex;
   flex-direction: column;

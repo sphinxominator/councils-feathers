@@ -27,8 +27,6 @@ const Title = styled.h2`
 `
 
 const Meeting = styled.div`
-  border-radius: ${props => props.theme.rounding}
-    ${props => props.theme.rounding} 0 0;
   flex-grow: 2;
   background-color: ${props => props.color};
   color: white;

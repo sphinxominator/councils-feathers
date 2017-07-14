@@ -61,7 +61,7 @@ const Card = styled.div`
   display: flex;
   flex-direction: column;
   height: auto;
-  min-height: 10rem;
+  min-height: 8rem;
   padding: 2rem 1rem .5rem 1rem;
   text-align: center;
 `
