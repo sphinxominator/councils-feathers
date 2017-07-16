@@ -6,6 +6,7 @@
     "auth0-js": "^8.7.0",
     "detect-node": "^2.0.3",
     "feathers-client": "^2.2.0",
+    "polished": "^1.3.0",
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
     "react-apollo": "^1.2.0",

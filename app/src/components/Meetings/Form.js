@@ -1,31 +1,29 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { pure, compose, withState, withHandlers } from 'recompose'
+import { pure, compose, withState, withHandlers, withProps } from 'recompose'
 import { graphql } from 'react-apollo'
 import { connect } from 'react-redux'
-import { Redirect } from 'react-router'
 
 import displayLoadingState from '../Loading'
+import withRedirect from '../Redirect'
 import { MeetingsQuery, GroupsQuery, CreateMeeting } from '../../queries'
 
 import Modal from '../Modal'
 
 export const MeetingFormPure = ({
   data: { groups },
+  activeGroup,
   activeGroupIndex,
-  value,
   onSubmit,
-  onChange,
-  onGroupSelectChange,
-  createdMeeting
+  onSelectChange
 }) =>
   <Modal locationOnClose="/meetings">
-    <Meeting color={groups[activeGroupIndex].color}>
+    <Meeting color={activeGroup.color}>
       <Select
         value={activeGroupIndex}
-        onChange={onGroupSelectChange}
-        color={groups[activeGroupIndex].color}
+        onChange={onSelectChange}
+        color={activeGroup.color}
       >
         {groups.map((group, i) =>
           <Option value={i} key={group.id}>
@@ -34,7 +32,6 @@ export const MeetingFormPure = ({
         )}
       </Select>
       <Input type="button" value="Opret møde" onClick={onSubmit} />
-      {createdMeeting && <Redirect to={`/meetings/${createdMeeting.id}`} />}
     </Meeting>
   </Modal>
 
@@ -78,11 +75,8 @@ const submitProp = {
           }
         },
         update: (store, { data: { createMeeting } }) => {
-          // Read the data from our cache for this query.
           const data = store.readQuery({ query: MeetingsQuery })
-          // Add our comment from the mutation to the end.
           data.meetings.unshift(createMeeting)
-          // Write our data back to the cache.
           store.writeQuery({ query: MeetingsQuery, data })
         }
       })
@@ -91,41 +85,38 @@ const submitProp = {
 
 const handlers = {
   onSubmit: props => event => {
-    event.preventDefault()
-    const group = props.data.groups[props.activeGroupIndex]
     props
       .submit({
         text: '',
-        groupId: group.id
+        groupId: props.activeGroup.id
       })
-      .then(response => props.setCreatedMeeting(response.data.createMeeting))
+      .then(response =>
+        props.redirect(`/meetings/${response.data.createMeeting.id}`)
+      )
       .catch(error => console.log(error.message))
   },
-  onGroupSelectChange: props => event => {
+  onSelectChange: props => event => {
     props.changeGroup(event.target.value)
   }
 }
 
-const mapStateToProps = ({ groups }) => ({
-  activeGroup: groups.activeGroup
-})
-
-const findActiveGroupIndex = props => {
-  const activeGroup = props.data.groups.findIndex(
-    group => group.id === props.activeGroup
+const initialActiveGroupIndex = props => {
+  const index = props.data.groups.findIndex(
+    group => group.id === props.initialGroupId
   )
-
-  // Let's just pick the first in the list
-  return activeGroup > -1 ? activeGroup : 0
+  return index > -1 ? index : 0 // Return the first if none is selected
 }
 
 export default compose(
-  connect(mapStateToProps),
+  connect(({ groups }) => ({ initialGroupId: groups.activeGroup })),
   graphql(GroupsQuery),
   graphql(CreateMeeting, submitProp),
   displayLoadingState,
-  withState('activeGroupIndex', 'changeGroup', findActiveGroupIndex),
-  withState('createdMeeting', 'setCreatedMeeting', null),
+  withState('activeGroupIndex', 'changeGroup', initialActiveGroupIndex),
+  withProps(props => ({
+    activeGroup: props.data.groups[props.activeGroupIndex]
+  })),
+  withRedirect,
   withHandlers(handlers),
   pure
 )(MeetingFormPure)
