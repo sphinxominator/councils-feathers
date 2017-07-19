@@ -11,6 +11,8 @@ import { MeetingsQuery, GroupsQuery, CreateMeeting } from '../../queries'
 
 import Modal from '../Modal'
 
+import Datepicker from '../Datepicker'
+
 export const MeetingFormPure = ({
   data: { groups },
   activeGroup,
@@ -31,6 +33,7 @@ export const MeetingFormPure = ({
           </Option>
         )}
       </Select>
+      <Datepicker />
       <Input type="button" value="Opret møde" onClick={onSubmit} />
     </Meeting>
   </Modal>

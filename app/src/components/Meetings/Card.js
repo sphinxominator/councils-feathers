@@ -7,10 +7,10 @@ import { Link } from 'react-router-dom'
 const d = '14. Januar, 2017'
 const t = '10:45'
 
-export default ({ id, text, date = d, time = t, group }) =>
+export default ({ id, date = d, time = t, group: { name, color } }) =>
   <Link to={`/meetings/${id}`}>
     <StyledGrid xs={1} sm={1 / 2} md={1 / 3} lg={1 / 3}>
-      <Card color={group.color}>
+      <Card color={color}>
         <Text>
           {date}
         </Text>
@@ -19,7 +19,7 @@ export default ({ id, text, date = d, time = t, group }) =>
         </Text>
         <Bottom>
           <Text>
-            {group.name}
+            {name}
           </Text>
           <div>
             <Dot />
