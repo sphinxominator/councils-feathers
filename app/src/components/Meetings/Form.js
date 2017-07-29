@@ -56,9 +56,16 @@ const Select = styled.select`
   background-color: ${props => props.color};
   border: 0;
   color: white;
+  cursor: pointer;
   margin-top: 1.5rem;
   font-size: 1.7rem;
   font-weight: bold;
+
+  transition: box-shadow 0.15s ease-in;
+
+  &:hover {
+    text-shadow: 0 19px 60px rgba(0, 0, 0, .3), 0 15px 20px rgba(0, 0, 0, .22);
+  }
 `
 
 const Option = styled.option`

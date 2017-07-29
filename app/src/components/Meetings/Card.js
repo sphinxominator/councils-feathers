@@ -4,19 +4,40 @@ import Grid from '../Grid'
 
 import { Link } from 'react-router-dom'
 
-const d = '14. Januar, 2017'
-const t = '10:45'
+import media from '../../mediaQueries'
 
-export default ({ id, date = d, time = t, group: { name, color } }) =>
+import {
+  getYear,
+  getMonth,
+  getDay,
+  getDate,
+  getHours,
+  getMinutes
+} from 'date-fns'
+
+import { days, months } from '../../utils/dates'
+
+const d = '14. Januar, 2017, 10:45'
+
+export default ({ id, date = d, group: { name, color } }) =>
   <Link to={`/meetings/${id}`}>
     <StyledGrid xs={1} sm={1 / 2} md={1 / 3} lg={1 / 3}>
       <Card color={color}>
-        <Text>
-          {date}
-        </Text>
-        <Text>
-          {time}
-        </Text>
+        <Time>
+          <p>
+            {getYear(date)}
+          </p>
+          <h2>
+            {days[getDay(date)] +
+              ', ' +
+              months[getMonth(date)] +
+              ' ' +
+              getDate(date)}
+          </h2>
+          <h2>
+            {getHours(date) + ':' + getMinutes(date)}
+          </h2>
+        </Time>
         <Bottom>
           <Text>
             {name}
@@ -33,6 +54,24 @@ export default ({ id, date = d, time = t, group: { name, color } }) =>
 
 const StyledGrid = styled(Grid)`
   margin-bottom: 1rem;
+  padding: 0;
+
+  ${media.tablet`
+    padding: 0 10px 0 10px;
+  `}
+`
+
+const Time = styled.div`
+  margin-bottom: .5rem;
+
+  h2 {
+    font-size: 1.4rem;
+    margin: 0;
+  }
+
+  p {
+    margin: 0;
+  }
 `
 
 const Dot = styled.span`
@@ -52,6 +91,10 @@ const Bottom = styled.div`
   margin-top: auto;
   align-items: center;
   justify-content: space-between;
+
+  p {
+    margin-bottom: 0;
+  }
 `
 
 const Card = styled.div`
@@ -61,9 +104,8 @@ const Card = styled.div`
   display: flex;
   flex-direction: column;
   height: auto;
-  min-height: 8rem;
-  padding: 2rem 1rem .5rem 1rem;
-  text-align: center;
+  min-height: 10rem;
+  padding: 1rem;
 `
 
 const Text = styled.p`

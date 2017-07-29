@@ -68,6 +68,10 @@ const CloseButton = styled(Link)`
   svg {
     height: 1.7rem;
     width: 1.7rem;
+
+    polygon {
+      fill: white;
+    }
   }
 `
 
