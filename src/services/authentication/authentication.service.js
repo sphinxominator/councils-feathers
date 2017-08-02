@@ -32,20 +32,30 @@ module.exports = function() {
         clientSecret: process.env.AUTH0_CLIENT_SECRET,
         callbackURL: process.env.URI + '/auth/callback'
       },
-      function(accessToken, refreshToken, extraParams, profile, done) {
-        return done(null, { profile, token: extraParams.id_token })
+      (accessToken, refreshToken, extraParams, profile, done) => {
+        done(null, { profile, token: extraParams.id_token })
       }
     )
   )
 
   app.get(
+    '/auth/login/google',
+    auth.express.authenticate('auth0', {
+      connection: 'google-oauth2',
+      scope: 'openid'
+    })
+  )
+
+  app.get(
     '/auth/callback',
-    auth.express.authenticate('auth0', { failureRedirect: '/failure' }),
+    auth.express.authenticate('auth0', {
+      failureRedirect: '/failure'
+    }),
     function(req, res) {
-      // Set the cookie to expire with the token
+      //Set the cookie to expire with the token
       const { exp } = jwtDecode(req.user.token)
       const expires = new Date(exp * 1000)
-
+      //console.log(req.user)
       res.cookie('feathers-jwt', req.user.token, { expires })
       res.redirect('/')
     }
