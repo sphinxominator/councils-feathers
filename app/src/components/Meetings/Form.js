@@ -18,7 +18,9 @@ export const MeetingFormPure = ({
   activeGroup,
   activeGroupIndex,
   onSubmit,
-  onSelectChange
+  onSelectChange,
+  date,
+  setDate
 }) =>
   <Modal locationOnClose="/meetings">
     <Meeting color={activeGroup.color}>
@@ -33,7 +35,7 @@ export const MeetingFormPure = ({
           </Option>
         )}
       </Select>
-      <Datepicker />
+      <Datepicker onChange={setDate} value={date} />
       <Input type="button" value="Opret møde" onClick={onSubmit} />
     </Meeting>
   </Modal>
@@ -76,12 +78,12 @@ const Option = styled.option`
 
 const submitProp = {
   props: ({ mutate }) => ({
-    submit: props =>
+    submit: ({ date, groupId }) =>
       mutate({
         variables: {
           meeting: {
-            text: props.text,
-            groupId: props.groupId
+            date,
+            groupId
           }
         },
         update: (store, { data: { createMeeting } }) => {
@@ -98,6 +100,7 @@ const handlers = {
     props
       .submit({
         text: '',
+        date: props.date,
         groupId: props.activeGroup.id
       })
       .then(response =>
@@ -123,6 +126,7 @@ export default compose(
   graphql(CreateMeeting, submitProp),
   displayLoadingState,
   withState('activeGroupIndex', 'changeGroup', initialActiveGroupIndex),
+  withState('date', 'setDate', new Date()),
   withProps(props => ({
     activeGroup: props.data.groups[props.activeGroupIndex]
   })),

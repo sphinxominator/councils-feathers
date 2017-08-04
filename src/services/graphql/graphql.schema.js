@@ -1,7 +1,7 @@
 export default `
   type Meeting {
     id: String!
-    text: String
+    date: String!
     groupId: Int!
     group: Group
   }
@@ -20,7 +20,7 @@ export default `
   }
 
   input meetingInput {
-    text: String!
+    date: String
     groupId: Int
   }
 

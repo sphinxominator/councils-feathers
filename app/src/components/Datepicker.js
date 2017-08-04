@@ -159,7 +159,6 @@ const Day = styled.div`
 `
 
 export default compose(
-  withState('value', 'setValue', initalDate),
   withState('toggled', 'setToggled', false),
   withState('date', 'setViewedDate', initalDate),
   withProps(props => ({
@@ -179,7 +178,7 @@ export default compose(
     onHeaderClick: ({ setToggled, toggled }) => setToggled(!toggled),
     onDayClick: props => event => {
       let newDate = setDate(props.date, event.target.getAttribute('value'))
-      props.setValue(newDate)
+      props.onChange(newDate)
       props.setViewedDate(newDate)
       props.setToggled(!props.toggled)
     },

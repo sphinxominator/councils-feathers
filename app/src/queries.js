@@ -5,7 +5,6 @@ export const MeetingsQuery = gql`
   query MeetingsQuery {
     meetings {
       id
-      text
       group {
         id
         name
@@ -19,7 +18,6 @@ export const MeetingQuery = gql`
   query MeetingQuery($id: Int!) {
     meeting(id: $id) {
       id
-      text
       group {
         id
         name
@@ -53,7 +51,7 @@ export const CreateMeeting = gql`
   mutation createMeeting($meeting: meetingInput!) {
     createMeeting(meeting: $meeting) {
       id
-      text
+      date
       groupId
       group {
         id
