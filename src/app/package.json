@@ -1,0 +1,37 @@
+{
+  "name": "app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "auth0-js": "^8.7.0",
+    "date-fns": "^1.28.5",
+    "detect-node": "^2.0.3",
+    "feathers-client": "^2.2.0",
+    "polished": "^1.3.0",
+    "prop-types": "^15.5.10",
+    "react": "^15.5.4",
+    "react-apollo": "^1.2.0",
+    "react-dom": "^15.5.4",
+    "react-onclickoutside": "^6.4.0",
+    "react-redux": "^5.0.5",
+    "recompact": "^3.0.3",
+    "recompose": "^0.23.4",
+    "redux": "^3.6.0",
+    "seamless-immutable": "^7.1.2",
+    "socket-io": "^1.0.0",
+    "styled-components": "^2.0.0"
+  },
+  "devDependencies": {
+    "@storybook/react": "^3.1.9",
+    "react-scripts": "1.0.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "storybook": "start-storybook -p 9009 -s public",
+    "build-storybook": "build-storybook -s public"
+  },
+  "proxy": "http://localhost:3001"
+}

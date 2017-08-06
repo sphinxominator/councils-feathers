@@ -1,5 +1,3 @@
 {
-  "presets": ["es2015", "react-app"],
-  "plugins": [
-  ]
+  "presets": ["razzle/babel", "es2015"]
 }

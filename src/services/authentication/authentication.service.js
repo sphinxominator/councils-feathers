@@ -8,10 +8,10 @@ module.exports = function() {
 
   app.configure(
     auth({
-      secret: process.env.AUTH0_CLIENT_SECRET,
+      secret: process.env.RAZZLE_AUTH0_CLIENT_SECRET,
       jwt: {
-        audience: process.env.AUTH0_CLIENT_ID,
-        issuer: 'https://' + process.env.AUTH0_DOMAIN + '/'
+        audience: process.env.RAZZLE_AUTH0_CLIENT_ID,
+        issuer: 'https://' + process.env.RAZZLE_AUTH0_DOMAIN + '/'
       }
     })
   )
@@ -19,7 +19,7 @@ module.exports = function() {
   app.configure(
     jwt({
       jwtFromRequest: cookieExtractor,
-      secretOrKey: process.env.AUTH0_CLIENT_SECRET,
+      secretOrKey: process.env.RAZZLE_AUTH0_CLIENT_SECRET,
       service: 'api/users'
     })
   )
@@ -27,9 +27,9 @@ module.exports = function() {
   app.passport.use(
     new Auth0Strategy(
       {
-        domain: process.env.AUTH0_DOMAIN,
-        clientID: process.env.AUTH0_CLIENT_ID,
-        clientSecret: process.env.AUTH0_CLIENT_SECRET,
+        domain: process.env.RAZZLE_AUTH0_DOMAIN,
+        clientID: process.env.RAZZLE_AUTH0_CLIENT_ID,
+        clientSecret: process.env.RAZZLE_AUTH0_CLIENT_SECRET,
         callbackURL: process.env.URI + '/auth/callback'
       },
       (accessToken, refreshToken, extraParams, profile, done) => {
