@@ -9,11 +9,10 @@ module.exports = function(app) {
 
   db.schema
     .createTableIfNotExists('meetings', table => {
-      table.increments('id')
+      table.increments('id').primary()
       table.string('text')
       table.dateTime('date')
-      table.integer('group_id')
-      //table.foreign('group_id').references('groups.id')
+      table.integer('group_id').references('groups.id')
     })
     .then(() => console.log('Updated meetings table'))
     .catch(e => console.error('Error updating meetings table', e))

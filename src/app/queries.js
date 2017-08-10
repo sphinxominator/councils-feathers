@@ -5,6 +5,7 @@ export const MeetingsQuery = gql`
   query MeetingsQuery {
     meetings {
       id
+      date
       group {
         id
         name
@@ -18,6 +19,7 @@ export const MeetingQuery = gql`
   query MeetingQuery($id: Int!) {
     meeting(id: $id) {
       id
+      date
       group {
         id
         name
