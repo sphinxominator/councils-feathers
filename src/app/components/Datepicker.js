@@ -19,10 +19,14 @@ import {
 
 import { days, months } from '../utils/dates'
 
+import { Picker, Wrapper, Toggle, Header, toggleable } from './Picker'
+
 const initalDate = new Date()
 
 const CalendarPure = ({
   value,
+  disabled,
+  compact,
   toggled,
   year,
   month,
@@ -30,14 +34,14 @@ const CalendarPure = ({
   weekDay,
   viewedYear,
   viewedMonth,
-  daysInViewedMonth,
+  options,
   onNextMonthClick,
   onPreviousMonthClick,
   onDayClick,
-  onHeaderClick
+  handleToggleClick
 }) =>
-  <Calendar toggled={toggled}>
-    <Header onClick={onHeaderClick} toggled={toggled}>
+  <Wrapper toggled={toggled} compact={compact}>
+    <Header onClick={handleToggleClick} disabled={disabled} compact={compact}>
       <p>
         {year}
       </p>
@@ -55,64 +59,14 @@ const CalendarPure = ({
           {'->'}
         </NavigationButton>
       </Navigation>
-      <DayPickerPure
-        daysInViewedMonth={daysInViewedMonth}
-        day={day}
-        onDayClick={onDayClick}
+      <Picker
+        columns={7}
+        options={options}
+        selectedOption={1}
+        onOptionClick={onDayClick}
       />
     </Toggle>
-  </Calendar>
-
-const DayPickerPure = ({ daysInViewedMonth, day, onDayClick }) =>
-  <Days>
-    {[...Array(daysInViewedMonth)].map((_, i) => {
-      let dayNumber = i + 1
-      return (
-        <Day key={dayNumber} selected={dayNumber === day}>
-          <span onClick={onDayClick} value={dayNumber}>
-            {dayNumber}
-          </span>
-        </Day>
-      )
-    })}
-  </Days>
-
-const Calendar = styled.div`
-  margin: 1rem 0 1rem 0;
-  width: 20rem;
-  display: flex;
-  flex-direction: column;
-  box-shadow: ${props =>
-    props.toggled
-      ? '0 19px 60px rgba(0, 0, 0, .3), 0 15px 20px rgba(0, 0, 0, .22)'
-      : '0'};
-`
-
-const Toggle = styled.div`
-  display: ${props => (props.toggled ? 'block' : 'none')};
-  background-color: white;
-`
-
-const Header = styled.div`
-  background-color: transparent;
-  color: white;
-  padding: 1rem 0 .5rem .5rem;
-  cursor: pointer;
-  transition: text-shadow 0.15s ease-in;
-
-  &:hover {
-    text-shadow: 0 19px 60px rgba(0, 0, 0, .3), 0 15px 20px rgba(0, 0, 0, .22);
-  }
-
-  h2 {
-    font-size: 2rem;
-    margin: 0;
-  }
-
-  p {
-    margin: 0;
-  }
-`
+  </Wrapper>
 
 const Navigation = styled.div`
   width: 95%;
@@ -128,38 +82,8 @@ const NavigationButton = styled.span`
   cursor: pointer;
 `
 
-const Days = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  padding-bottom: .25rem;
-`
-const Day = styled.div`
-  flex: 0 0 14.28571%;
-  display: flex;
-  justify-content: center;
-
-  cursor: pointer;
-
-  span {
-    height: 2.5rem;
-    width: 2.5rem;
-    background-color: ${props => (props.selected ? '#3f51b5' : 'trasparent')};
-    color: ${props => (props.selected ? 'white' : 'trasparent')};
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-
-    &:hover {
-      background-color: ${lighten(0.1, '#3f51b5')};
-      color: white;
-    }
-  }
-`
-
 export default compose(
-  withState('toggled', 'setToggled', false),
+  toggleable,
   withState('date', 'setViewedDate', initalDate),
   withProps(props => ({
     year: getYear(props.value),
@@ -168,24 +92,19 @@ export default compose(
     weekDay: getDay(props.value),
     viewedYear: getYear(props.date),
     viewedMonth: getMonth(props.date),
-    daysInViewedMonth: getDaysInMonth(props.date)
+    options: [...Array(getDaysInMonth(props.date))].map((_, i) => i + 1)
   })),
   withHandlers({
-    onNextMonthClick: ({ setViewedDate, date }) =>
+    onNextMonthClick: ({ setViewedDate, date }) => () =>
       setViewedDate(addMonths(date, 1)),
-    onPreviousMonthClick: ({ setViewedDate, date }) =>
+    onPreviousMonthClick: ({ setViewedDate, date }) => () =>
       setViewedDate(addMonths(date, -1)),
-    onHeaderClick: ({ setToggled, toggled }) => setToggled(!toggled),
     onDayClick: props => event => {
       let newDate = setDate(props.date, event.target.getAttribute('value'))
       props.onChange(newDate)
       props.setViewedDate(newDate)
       props.setToggled(!props.toggled)
-    },
-    handleClickOutside: ({ setToggled }) => {
-      setToggled(false)
     }
   }),
-  onClickOutside,
   pure
 )(CalendarPure)
