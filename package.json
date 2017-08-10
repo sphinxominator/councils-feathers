@@ -23,6 +23,7 @@
     "eslint": "eslint src/. test/. --config .eslintrc.json",
     "knex": "knex",
     "mocha": "mocha test/ --recursive",
+    "postinstall": "razzle build",
     "prettier": "find ./src ./app/src -name '*.js' | xargs prettier --single-quote --no-semi --jsx-bracket-same-line --write ",
     "start:prod": "NODE_ENV=production node build/server.js",
     "start": "razzle start",
