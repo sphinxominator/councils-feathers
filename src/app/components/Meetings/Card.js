@@ -1,64 +1,39 @@
 import React from 'react'
 import styled from 'styled-components'
-import Grid from '../Grid'
 
-import { Link } from 'react-router-dom'
+import Datepicker from '../Datepicker'
+import Timepicker from '../Timepicker'
 
-import media from '../../mediaQueries'
+export default ({ date, name, color }) =>
+  <Card color={color}>
+    <Time>
+      <Datepicker disabled compact value={date} />
+      <Timepicker disabled compact value={date} />
+    </Time>
+    <Bottom>
+      <Text>
+        {name}
+      </Text>
+      <div>
+        <Dot />
+        <Dot />
+        <Dot />
+      </div>
+    </Bottom>
+  </Card>
 
-import {
-  getYear,
-  getMonth,
-  getDay,
-  getDate,
-  getHours,
-  getMinutes
-} from 'date-fns'
-
-import { days, months } from '../../utils/dates'
-
-const d = '14. Januar, 2017, 10:45'
-
-export default ({ id, date = d, group: { name, color } }) =>
-  <Link to={`/meetings/${id}`}>
-    <StyledGrid xs={1} sm={1 / 2} md={1 / 3} lg={1 / 3}>
-      <Card color={color}>
-        <Time>
-          <p>
-            {getYear(date)}
-          </p>
-          <h2>
-            {days[getDay(date)] +
-              ', ' +
-              months[getMonth(date)] +
-              ' ' +
-              getDate(date)}
-          </h2>
-          <h2>
-            {getHours(date) + ':' + getMinutes(date)}
-          </h2>
-        </Time>
-        <Bottom>
-          <Text>
-            {name}
-          </Text>
-          <div>
-            <Dot />
-            <Dot />
-            <Dot />
-          </div>
-        </Bottom>
-      </Card>
-    </StyledGrid>
-  </Link>
-
-const StyledGrid = styled(Grid)`
-  margin-bottom: 1rem;
-  padding: 0;
-
-  ${media.tablet`
-    padding: 0 10px 0 10px;
-  `}
+const Card = styled.div`
+  background-color: ${props => props.color};
+  border-radius: ${props => props.theme.rounding};
+  color: white;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 2;
+  height: auto;
+  min-height: 11rem;
+  padding: 1rem;
+  width: 100%;
+  box-sizing: border-box;
 `
 
 const Time = styled.div`
@@ -95,17 +70,6 @@ const Bottom = styled.div`
   p {
     margin-bottom: 0;
   }
-`
-
-const Card = styled.div`
-  background-color: ${props => props.color};
-  border-radius: ${props => props.theme.rounding};
-  color: white;
-  display: flex;
-  flex-direction: column;
-  height: auto;
-  min-height: 10rem;
-  padding: 1rem;
 `
 
 const Text = styled.p`

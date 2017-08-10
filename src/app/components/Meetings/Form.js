@@ -1,17 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { pure, compose, withState, withHandlers, withProps } from 'recompact'
 import { graphql } from 'react-apollo'
 import { connect } from 'react-redux'
+import { pure, compose, withState, withHandlers, withProps } from 'recompact'
+import { MeetingsQuery, GroupsQuery, CreateMeeting } from '../../queries'
 
 import displayLoadingState from '../Loading'
 import withRedirect from '../Redirect'
-import { MeetingsQuery, GroupsQuery, CreateMeeting } from '../../queries'
-
 import Modal from '../Modal'
-
 import Datepicker from '../Datepicker'
+import Timepicker from '../Timepicker'
 
 export const MeetingFormPure = ({
   data: { groups },
@@ -36,6 +35,7 @@ export const MeetingFormPure = ({
         )}
       </Select>
       <Datepicker onChange={setDate} value={date} />
+      <Timepicker onChange={setDate} value={date} />
       <Input type="button" value="Opret møde" onClick={onSubmit} />
     </Meeting>
   </Modal>
@@ -95,24 +95,6 @@ const submitProp = {
   })
 }
 
-const handlers = {
-  onSubmit: props => event => {
-    props
-      .submit({
-        text: '',
-        date: props.date,
-        groupId: props.activeGroup.id
-      })
-      .then(response =>
-        props.redirect(`/meetings/${response.data.createMeeting.id}`)
-      )
-      .catch(error => console.log(error.message))
-  },
-  onSelectChange: props => event => {
-    props.changeGroup(event.target.value)
-  }
-}
-
 const initialActiveGroupIndex = props => {
   const index = props.data.groups.findIndex(
     group => group.id === props.initialGroupId
@@ -131,6 +113,22 @@ export default compose(
     activeGroup: props.data.groups[props.activeGroupIndex]
   })),
   withRedirect,
-  withHandlers(handlers),
+  withHandlers({
+    onSubmit: props => event => {
+      props
+        .submit({
+          text: '',
+          date: props.date,
+          groupId: props.activeGroup.id
+        })
+        .then(response =>
+          props.redirect(`/meetings/${response.data.createMeeting.id}`)
+        )
+        .catch(error => console.log(error.message))
+    },
+    onSelectChange: props => event => {
+      props.changeGroup(event.target.value)
+    }
+  }),
   pure
 )(MeetingFormPure)

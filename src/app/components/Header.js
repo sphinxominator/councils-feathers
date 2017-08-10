@@ -39,9 +39,9 @@ const Right = styled.div`
   display: inline-flex;
 `
 
-const ProfilePure = ({ auth }) =>
+const ProfilePure = ({ auth: { picture } }) =>
   <StyledProfile>
-    <ProfilePicture src={auth.picture} alt="profile" />
+    <ProfilePicture src={picture} alt="profile" />
   </StyledProfile>
 
 const ProfilePicture = styled.img`

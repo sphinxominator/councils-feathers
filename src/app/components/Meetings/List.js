@@ -1,23 +1,36 @@
 import React from 'react'
+import styled from 'styled-components'
 
 import { pure, compose } from 'recompact'
 import { graphql } from 'react-apollo'
 import { connect } from 'react-redux'
-import styled from 'styled-components'
-
-import { MeetingsQuery } from '../../queries'
-import displayLoadingState from '../Loading'
-import MeetingCard from './Card'
+import { Link } from 'react-router-dom'
 
 import media from '../../mediaQueries'
+import { MeetingsQuery } from '../../queries'
+
+import displayLoadingState from '../Loading'
+import MeetingCard from './Card'
+import Grid from '../Grid'
 
 const MeetingsPure = ({ data: { meetings } = [], activeGroup }) =>
   <MeetingsList>
     <NegativeMargins>
       {meetings
         .filter(({ group }) => !activeGroup || group.id === activeGroup)
-        .map(({ id, text, group }) =>
-          <MeetingCard key={id} id={id} text={text} group={group} />
+        .sort((a, b) => new Date(b.date) - new Date(a.date))
+        .map(({ id, date, group: { name, color } }) =>
+          <Link to={`/meetings/${id}`}>
+            <StyledGrid xs={1} sm={1 / 2} md={1 / 3} lg={1 / 3}>
+              <MeetingCard
+                key={id}
+                id={id}
+                date={date}
+                name={name}
+                color={color}
+              />
+            </StyledGrid>
+          </Link>
         )}
     </NegativeMargins>
   </MeetingsList>
@@ -36,6 +49,15 @@ const NegativeMargins = styled.div`
   ${media.tablet`
     margin: 0 -${props => props.theme.gutter}px;
   `};
+`
+
+const StyledGrid = styled(Grid)`
+  margin-bottom: 1rem;
+  padding: 0;
+
+  ${media.tablet`
+    padding: 0 10px 0 10px;
+  `}
 `
 
 export default compose(
