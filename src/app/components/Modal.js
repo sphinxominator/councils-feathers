@@ -1,19 +1,26 @@
 import React from 'react'
 import styled from 'styled-components'
+import onClickOutside from 'react-onclickoutside'
+
+import { compose, pure, withHandlers } from 'recompact'
 import { Link } from 'react-router-dom'
 
 import media from '../mediaQueries'
 
-export default ({ locationOnClose, children, narrow = false }) =>
+import withRedirect from './Redirect'
+
+export default props =>
   <Background>
-    <CloseFullscreen to={locationOnClose} />
-    <Content narrow={narrow}>
-      <CloseButton to={locationOnClose}>
-        <CrossIcon />
-      </CloseButton>
-      {children}
-    </Content>
+    <Modal {...props} />
   </Background>
+
+const ModalPure = ({ locationOnClose, children, narrow = false }) =>
+  <Content narrow={narrow}>
+    <CloseButton to={locationOnClose}>
+      <CrossIcon />
+    </CloseButton>
+    {children}
+  </Content>
 
 const Background = styled.div`
   align-items: center;
@@ -50,14 +57,6 @@ const Content = styled.div`
   `};
 `
 
-const CloseFullscreen = styled(Link)`
-  position: absolute;
-  display: block;
-  height: 100%;
-  width: 100%;
-  text-decoration: none;
-`
-
 const CloseButton = styled(Link)`
   position: absolute;
   right: .25rem;
@@ -82,3 +81,13 @@ const CrossIcon = () =>
       points="77.6,21.1 49.6,49.2 21.5,21.1 19.6,23 47.6,51.1 19.6,79.2 21.5,81.1 49.6,53 77.6,81.1 79.6,79.2 51.5,51.1 79.6,23 "
     />
   </svg>
+
+const Modal = compose(
+  withRedirect,
+  withHandlers({
+    handleClickOutside: ({ redirect, locationOnClose }) =>
+      redirect(locationOnClose)
+  }),
+  onClickOutside,
+  pure
+)(ModalPure)
