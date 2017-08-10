@@ -6,7 +6,7 @@ const logger = new winston.Logger({
     new winston.transports.Console({
       name: 'debug-console',
       level: 'debug',
-      prettyPrint: object => JSON.stringify(object),
+      prettyPrint: true,
       handleExceptions: true,
       json: true,
       colorize: true
