@@ -8,7 +8,7 @@ const logger = new winston.Logger({
       level: 'debug',
       prettyPrint: true,
       handleExceptions: true,
-      json: true,
+      json: false,
       colorize: true
     })
   ],
