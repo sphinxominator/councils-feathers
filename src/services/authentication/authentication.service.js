@@ -30,7 +30,7 @@ module.exports = function() {
         domain: process.env.RAZZLE_AUTH0_DOMAIN,
         clientID: process.env.RAZZLE_AUTH0_CLIENT_ID,
         clientSecret: process.env.RAZZLE_AUTH0_CLIENT_SECRET,
-        callbackURL: process.env.URI + '/auth/callback'
+        callbackURL: process.env.RAZZLE_URI + '/auth/callback'
       },
       (accessToken, refreshToken, extraParams, profile, done) => {
         done(null, { profile, token: extraParams.id_token })

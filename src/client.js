@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { render } from 'react-dom'
 import registerServiceWorker from './app/registerServiceWorker'
 
 import { BrowserRouter } from 'react-router-dom'
@@ -48,7 +48,7 @@ const store = createStore(
 
 const root = document.getElementById('root')
 
-ReactDOM.render(
+render(
   <BrowserRouter>
     <Provider store={store}>
       <ApolloProvider client={client} store={store}>
@@ -59,20 +59,8 @@ ReactDOM.render(
   root
 )
 
-/*if (module.hot) {
-  module.hot.accept('./App', () => {
-    const NextApp = require('./App').default
-    ReactDOM.render(
-      <BrowserRouter>
-        <Provider store={store}>
-          <ApolloProvider client={client} store={store}>
-            <NextApp />
-          </ApolloProvider>
-        </Provider>
-      </BrowserRouter>,
-      root
-    )
-  })
-}*/
+if (module.hot) {
+  module.hot.accept()
+}
 
 registerServiceWorker()

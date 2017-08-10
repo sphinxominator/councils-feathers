@@ -19,14 +19,14 @@
     "yarn": ">= 0.18.0"
   },
   "scripts": {
+    "build": "razzle build",
     "eslint": "eslint src/. test/. --config .eslintrc.json",
     "knex": "knex",
     "mocha": "mocha test/ --recursive",
     "prettier": "find ./src ./app/src -name '*.js' | xargs prettier --single-quote --no-semi --jsx-bracket-same-line --write ",
+    "start:prod": "NODE_ENV=production node build/server.js",
     "start": "razzle start",
-    "build": "razzle build",
-    "test": "razzle test --env=jsdom",
-    "start:prod": "NODE_ENV=production node build/server.js"
+    "test": "razzle test --env=jsdom"
   },
   "dependencies": {
     "apollo-local-query": "^0.3.0",
