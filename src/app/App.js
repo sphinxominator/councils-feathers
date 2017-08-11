@@ -1,4 +1,5 @@
 import React from 'react'
+import styled from 'styled-components'
 
 import { ThemeProvider } from 'styled-components'
 import { Route } from 'react-router-dom'
@@ -11,9 +12,14 @@ import theme from './theme'
 
 export default () =>
   <ThemeProvider theme={theme}>
-    <div>
+    <Background>
       <Route path="/" component={Header} />
       <Route path="/" component={Main} />
       <Route path="/" component={Navigator} />
-    </div>
+    </Background>
   </ThemeProvider>
+
+const Background = styled.div`
+  background-color: #fafafa;
+  font-family: 'Roboto', sans-serif;
+`

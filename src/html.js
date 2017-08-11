@@ -9,11 +9,13 @@ export default (jsSrc, styles, markup, initialState) => `
     <meta name="apple-mobile-web-app-capable" content="yes">
 
     <title>Communities</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400" rel="stylesheet">
     <style>
       body {
         margin: 0;
         padding: 0;
-        font-family: sans-serif;
+        background-color: #fafafa;
+        font-family: 'Roboto', sans-serif;
       }
     </style>
     ${styles}

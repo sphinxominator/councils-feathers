@@ -1,5 +1,5 @@
 export default {
-  gutter: 10,
+  gutter: 20,
   primary: '#43b5ad',
   rounding: '.15rem'
 }

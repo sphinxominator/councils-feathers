@@ -53,8 +53,7 @@ const Option = styled.div`
 
 export const Header = styled.div`
   background-color: transparent;
-  color: white;
-  padding: ${props => (props.compact ? '0' : '1rem 0 .5rem .5rem')};
+  padding: ${props => (props.compact ? '0 0 .5rem 0' : '1rem 0 .5rem .5rem')};
   cursor: ${props => (props.disabled ? 'auto' : 'pointer')};
 
   h2 {

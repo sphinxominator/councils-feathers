@@ -45,9 +45,9 @@ const CalendarPure = ({
       <p>
         {year}
       </p>
-      <h2>
+      <p>
         {`${days[weekDay]}, ${months[month]} ${day}`}
-      </h2>
+      </p>
     </Header>
     <Toggle toggled={toggled}>
       <Navigation>

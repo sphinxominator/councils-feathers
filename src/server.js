@@ -36,9 +36,8 @@ app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-//app.use(favicon(path.join(app.get('public'), 'favicon.ico')))
 app.use(express.static(process.env.RAZZLE_PUBLIC_DIR))
-app.use(express.static('public'))
+//app.use(express.static('public'))
 
 // Set up Plugins and providers .
 app.configure(hooks())

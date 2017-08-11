@@ -15,17 +15,19 @@ export default ({ date, name, color }) =>
         {name}
       </Text>
       <div>
-        <Dot />
-        <Dot />
-        <Dot />
+        <Dot color={color} />
+        <Dot color={color} />
+        <Dot color={color} />
       </div>
     </Bottom>
   </Card>
 
 const Card = styled.div`
-  background-color: ${props => props.color};
+  background-color: white;
+  border: 1px solid #e6e6e6;
+  border-bottom: 2px solid ${props => props.color};
   border-radius: ${props => props.theme.rounding};
-  color: white;
+  color: black;
   display: flex;
   flex-direction: column;
   flex-grow: 2;
@@ -34,6 +36,11 @@ const Card = styled.div`
   padding: 1rem;
   width: 100%;
   box-sizing: border-box;
+
+  &:hover {
+    background-color: ${props => props.color};
+    color: white;
+  }
 `
 
 const Time = styled.div`
@@ -54,7 +61,7 @@ const Dot = styled.span`
   width: .75rem;
   margin: 0 .125rem;
   border-radius: 50%;
-  background-color: hsl(0, 0%, 95%);
+  background-color: ${props => props.color};
   color: black;
   font-size: .5rem;
 

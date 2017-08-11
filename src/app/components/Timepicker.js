@@ -38,7 +38,7 @@ const TimepickerPure = ({
 }) =>
   <Wrapper toggled={toggled} compact={compact}>
     <Header onClick={handleToggleClick} disabled={disabled} compact={compact}>
-      <h2>
+      <p>
         <Num active={name === 'hours'} toggled={toggled}>
           {('0' + getHours(value).toString()).slice(-2)}
         </Num>
@@ -46,7 +46,7 @@ const TimepickerPure = ({
         <Num active={name === 'minutes'} toggled={toggled}>
           {('0' + getMinutes(value).toString()).slice(-2)}
         </Num>
-      </h2>
+      </p>
     </Header>
     <Toggle toggled={toggled}>
       <Picker
@@ -58,9 +58,7 @@ const TimepickerPure = ({
     </Toggle>
   </Wrapper>
 
-const Num = styled.span`
-  color: ${props => (props.active && props.toggled ? 'black' : 'white')};
-`
+const Num = styled.span``
 
 export default compose(
   toggleable,

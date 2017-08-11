@@ -52,11 +52,11 @@ const NegativeMargins = styled.div`
 `
 
 const StyledGrid = styled(Grid)`
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   padding: 0;
 
   ${media.tablet`
-    padding: 0 10px 0 10px;
+    padding: 0 20px 0 20px;
   `}
 `
 
