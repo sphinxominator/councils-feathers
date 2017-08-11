@@ -20,15 +20,9 @@ const MeetingsPure = ({ data: { meetings } = [], activeGroup }) =>
         .filter(({ group }) => !activeGroup || group.id === activeGroup)
         .sort((a, b) => new Date(b.date) - new Date(a.date))
         .map(({ id, date, group: { name, color } }) =>
-          <Link to={`/meetings/${id}`}>
+          <Link key={id} to={`/meetings/${id}`}>
             <StyledGrid xs={1} sm={1 / 2} md={1 / 3} lg={1 / 3}>
-              <MeetingCard
-                key={id}
-                id={id}
-                date={date}
-                name={name}
-                color={color}
-              />
+              <MeetingCard id={id} date={date} name={name} color={color} />
             </StyledGrid>
           </Link>
         )}
@@ -42,6 +36,7 @@ const mapStateToProps = ({ groups }) => ({
 const MeetingsList = styled.div`
   display: flex;
   flex-wrap: wrap;
+  margin-top: 1rem;
 `
 const NegativeMargins = styled.div`
   width: 100%;
@@ -56,7 +51,8 @@ const StyledGrid = styled(Grid)`
   padding: 0;
 
   ${media.tablet`
-    padding: 0 20px 0 20px;
+    padding: 0 ${props => props.theme.gutter}px 0 ${props =>
+    props.theme.gutter}px;
   `}
 `
 

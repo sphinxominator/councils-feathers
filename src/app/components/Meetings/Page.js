@@ -8,15 +8,39 @@ import { MeetingQuery } from '../../queries'
 import displayLoadingState from '../Loading'
 
 import Modal from '../Modal'
-import Card from './Card'
+import Datepicker from '../Datepicker'
+import Timepicker from '../Timepicker'
+import { Bottom } from '../Styles'
 
 const PagePure = ({ name, date, color }) =>
   <Modal locationOnClose="/meetings">
-    <Card name={name} date={date} color={color} />
+    <Meeting color={color}>
+      <Datepicker value={date} compact disabled />
+      <Timepicker value={date} compact disabled />
+      <Bottom>
+        <h2>
+          {name}
+        </h2>
+        <div>
+          <h2>1176</h2>
+        </div>
+      </Bottom>
+    </Meeting>
     <Attendance>
       <h3>Ingen fremmødte</h3>
     </Attendance>
   </Modal>
+
+const Meeting = styled.div`
+  background-color: ${props => props.color};
+  box-sizing: border-box;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 2;
+  padding: 1rem;
+  width: 100%;
+`
 
 const Attendance = styled.div`
   border-radius: 0 0 ${props => props.theme.rounding}

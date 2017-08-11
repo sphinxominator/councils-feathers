@@ -62,6 +62,7 @@ export const Header = styled.div`
   }
 
   p {
+    font-size: 1.1rem;
     margin: 0;
   }
 `

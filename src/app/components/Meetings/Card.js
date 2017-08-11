@@ -24,10 +24,11 @@ export default ({ date, name, color }) =>
 
 const Card = styled.div`
   background-color: white;
-  border: 1px solid #e6e6e6;
+  border: ${props => props.theme.border};
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   border-bottom: 2px solid ${props => props.color};
   border-radius: ${props => props.theme.rounding};
-  color: black;
+  color: hsl(0, 0%, 30%);
   display: flex;
   flex-direction: column;
   flex-grow: 2;
@@ -39,6 +40,8 @@ const Card = styled.div`
 
   &:hover {
     background-color: ${props => props.color};
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    border: 0;
     color: white;
   }
 `
