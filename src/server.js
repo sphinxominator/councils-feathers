@@ -36,7 +36,11 @@ app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-app.use(express.static(path.join(__dirname, 'build/public')))
+const publicPath = __dirname + '/../build/public/'
+
+console.log(publicPath)
+
+app.use(express.static(publicPath))
 //app.use(express.static('public'))
 
 // Set up Plugins and providers .
