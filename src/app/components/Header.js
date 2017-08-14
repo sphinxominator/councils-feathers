@@ -10,6 +10,7 @@ import Dropdown from './Dropdown'
 
 const HeaderPure = () =>
   <Header>
+    <Left />
     <Title>Community</Title>
     <Right>
       <Dropdown content={<Menu />}>
@@ -36,6 +37,12 @@ const Title = styled.h2`font-size: 2rem;`
 const Right = styled.div`
   align-items: center;
   margin-left: auto;
+  display: inline-flex;
+`
+
+const Left = styled.div`
+  align-items: center;
+  margin-right: auto;
   display: inline-flex;
 `
 
