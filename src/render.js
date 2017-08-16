@@ -22,7 +22,11 @@ import {
 import App from './app/App'
 import html from './html'
 
-const assets = require(process.env.RAZZLE_ASSETS_MANIFEST)
+let assets = {}
+
+if (process.env.RAZZLE_ASSETS_MANIFEST) {
+  assets = require(process.env.RAZZLE_ASSETS_MANIFEST)
+}
 
 export default async (req, res) => {
   const client = new ApolloClient({
@@ -71,9 +75,9 @@ export default async (req, res) => {
     auth: req.user,
     apollo: client.getInitialState()
   }).replace(/</g, '\\u003c')
-
+  const js = (assets && assets.client && assets.client.js) || ''
   const styles = sheet.getStyleTags()
-  const markup = html(assets.client.js, styles, content, initialState)
+  const markup = html(js, styles, content, initialState)
 
   res.status(200)
   res.send(markup)

@@ -16,6 +16,7 @@ const rest = require('feathers-rest')
 const socketio = require('feathers-socketio')
 
 const express = require('express')
+const winston = require('winston')
 
 const middleware = require('./middleware')
 const services = require('./services')
@@ -25,23 +26,31 @@ const postgres = require('./postgres')
 
 const app = feathers()
 
+const winstonLogger = new winston.Logger({
+  transports: [
+    new winston.transports.Console({
+      name: 'debug-console',
+      level: 'debug',
+      prettyPrint: true,
+      handleExceptions: true,
+      json: false,
+      colorize: true
+    })
+  ],
+  exitOnError: false // don't crush no error
+})
+
 // Load app configuration
 app.configure(configuration(path.join(__dirname, '..')))
 // Enable CORS, security, compression, favicon and body parsing
-app.configure(logger())
+app.configure(logger(winstonLogger))
 app.use(cors())
 app.use(helmet())
 app.use(compress())
 app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
-
-const publicPath = __dirname + '/../build/public/'
-
-console.log(publicPath)
-
-app.use(express.static(publicPath))
-//app.use(express.static('public'))
+app.use(express.static(__dirname + '/../build/public/'))
 
 // Set up Plugins and providers .
 app.configure(hooks())
@@ -83,4 +92,4 @@ app.use('/', populateUser, renderApp)
 app.configure(middleware)
 app.hooks(appHooks)
 
-module.exports = app
+module.exports = { app, logger: winstonLogger }
