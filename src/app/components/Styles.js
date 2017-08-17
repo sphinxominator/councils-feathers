@@ -8,6 +8,6 @@ export const Bottom = styled.div`
 
   p,
   h2 {
-    margin-bottom: 0;
+    margin: 0;
   }
 `

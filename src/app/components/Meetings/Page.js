@@ -10,6 +10,7 @@ import displayLoadingState from '../Loading'
 import Modal from '../Modal'
 import Datepicker from '../Datepicker'
 import Timepicker from '../Timepicker'
+import { UsersListItem } from '../Users'
 import { Bottom } from '../Styles'
 
 const PagePure = ({ name, date, color }) =>
@@ -21,13 +22,19 @@ const PagePure = ({ name, date, color }) =>
         <h2>
           {name}
         </h2>
-        <div>
+        <AttendActions>
           <h2>1176</h2>
-        </div>
+        </AttendActions>
       </Bottom>
     </Meeting>
     <Attendance>
-      <h3>Ingen fremmødte</h3>
+      <Attendant>
+        <UsersListItem name={'Viktor Andersen'} />
+        <input type="text" placeholder="PIN" />
+      </Attendant>
+      <Attendant>
+        <UsersListItem name={'Viktor Andersen'} />
+      </Attendant>
     </Attendance>
   </Modal>
 
@@ -38,8 +45,14 @@ const Meeting = styled.div`
   display: flex;
   flex-direction: column;
   flex-grow: 2;
+  min-height: 15rem;
   padding: 1rem;
   width: 100%;
+`
+
+const AttendActions = styled.div`
+  display: inline-flex;
+  align-items: center;
 `
 
 const Attendance = styled.div`
@@ -51,6 +64,17 @@ const Attendance = styled.div`
   justify-content: center;
   align-items: center;
   display: flex;
+  flex-direction: column;
+`
+
+const Attendant = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: .75rem 1rem .75rem 1rem;
+  box-sizing: border-box;
 `
 
 export default compose(
