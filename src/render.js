@@ -31,14 +31,10 @@ if (process.env.RAZZLE_ASSETS_MANIFEST) {
 export default async (req, res) => {
   const client = new ApolloClient({
     ssrMode: true,
-    // Remember that this is the interface the SSR server will use to connect to the
-    // API server, so we need to ensure it isn't firewalled, etc
     networkInterface: createNetworkInterface({
       uri: process.env.RAZZLE_URI + '/graphql',
       opts: {
         credentials: 'same-origin',
-        // transfer request headers to networkInterface so that they're accessible to proxy server
-        // Addresses this issue: https://github.com/matthew-andrews/isomorphic-fetch/issues/83
         headers: req.headers
       }
     })
@@ -52,8 +48,9 @@ export default async (req, res) => {
       auth0: auth0Reducer
     }),
     {
+      // initial state
       auth: req.user
-    }, // initial state
+    },
     compose(applyMiddleware(client.middleware()))
   )
 
@@ -75,6 +72,7 @@ export default async (req, res) => {
     auth: req.user,
     apollo: client.getInitialState()
   }).replace(/</g, '\\u003c')
+
   const js = (assets && assets.client && assets.client.js) || ''
   const styles = sheet.getStyleTags()
   const markup = html(js, styles, content, initialState)
