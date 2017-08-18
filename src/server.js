@@ -32,7 +32,7 @@ const winstonLogger = new winston.Logger({
       name: 'debug-console',
       level: 'debug',
       prettyPrint: true,
-      handleExceptions: true,
+      handleExceptions: false,
       json: false,
       colorize: true
     })
@@ -92,4 +92,4 @@ app.use('/', populateUser, renderApp)
 app.configure(middleware)
 app.hooks(appHooks)
 
-module.exports = { app, logger: winstonLogger }
+module.exports = app
