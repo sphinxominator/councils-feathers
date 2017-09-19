@@ -1,10 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { pure, withProps, compose } from 'recompact'
+import { pure, withProps, withHandlers, compose } from 'recompact'
+import { connect } from 'react-redux'
 import { graphql } from 'react-apollo'
 
-import { MeetingQuery } from '../../queries'
+import { MeetingQuery, createAttendant } from '../../queries'
 import displayLoadingState from '../Loading'
 
 import Modal from '../Modal'
@@ -13,7 +14,9 @@ import Timepicker from '../Timepicker'
 import { UsersListItem } from '../Users'
 import { Bottom } from '../Styles'
 
-const PagePure = ({ name, date, color }) =>
+import AttendButton from '../Attendance/AttendButton.js'
+
+const PagePure = ({ name, date, color, attendants, handleAttendClick }) =>
   <Modal locationOnClose="/meetings">
     <Meeting color={color}>
       <Datepicker value={date} compact disabled />
@@ -28,13 +31,12 @@ const PagePure = ({ name, date, color }) =>
       </Bottom>
     </Meeting>
     <Attendance>
-      <Attendant>
-        <UsersListItem name={'Viktor Andersen'} />
-        <input type="text" placeholder="PIN" />
-      </Attendant>
-      <Attendant>
-        <UsersListItem name={'Viktor Andersen'} />
-      </Attendant>
+      <AttendButton onClick={handleAttendClick}>Tilmeld</AttendButton>
+      {attendants.map(({ id, text }) =>
+        <Attendant key={id}>
+          <UsersListItem name={text} />
+        </Attendant>
+      )}
     </Attendance>
   </Modal>
 
@@ -81,11 +83,22 @@ export default compose(
   graphql(MeetingQuery, {
     options: ({ match }) => ({ variables: { id: match.params.id } })
   }),
+  withHandlers({
+    handleAttendClick: ({ attend, userId, match }) => event => {
+      attend({
+        userId: 1,
+        meetingId: match.params.id
+      }).then(response => console.log(response))
+    }
+  }),
   displayLoadingState,
-  withProps(({ data: { meeting: { date, group: { name, color } } } }) => ({
-    date,
-    name,
-    color
-  })),
+  withProps(
+    ({ data: { meeting: { date, attendants, group: { name, color } } } }) => ({
+      date,
+      name,
+      color,
+      attendants
+    })
+  ),
   pure
 )(PagePure)

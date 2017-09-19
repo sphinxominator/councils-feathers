@@ -1,8 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { connect } from 'react-redux'
-import { branch, renderNothing, compose } from 'recompact'
+import { compose } from 'recompact'
+
+import requiresAuth from './RequiresAuth'
 
 import { LoginButton } from './Auth'
 import Menu from './Menu'
@@ -46,9 +47,9 @@ const Left = styled.div`
   display: inline-flex;
 `
 
-const ProfilePure = ({ auth: { picture } }) =>
+const ProfilePure = ({ data: { user } }) =>
   <StyledProfile>
-    <ProfilePicture src={picture} alt="profile" />
+    <ProfilePicture src={user.picture} alt="profile" />
   </StyledProfile>
 
 const ProfilePicture = styled.img`
@@ -57,10 +58,7 @@ const ProfilePicture = styled.img`
   height: 50px;
 `
 
-const Profile = compose(
-  connect(({ auth }) => ({ auth })),
-  branch(props => !props.auth, renderNothing)
-)(ProfilePure)
+const Profile = compose(requiresAuth)(ProfilePure)
 
 const StyledProfile = styled.div`
   margin-left: auto;
