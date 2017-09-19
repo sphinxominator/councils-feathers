@@ -1,6 +1,16 @@
 import { gql } from 'react-apollo'
 
 // Queries
+export const CurrentUserQuery = gql`
+  query CurrentUserQuery($id: String!) {
+    user(id: $id) {
+      user_id
+      name
+      picture
+    }
+  }
+`
+
 export const MeetingsQuery = gql`
   query MeetingsQuery {
     meetings {
@@ -24,6 +34,9 @@ export const MeetingQuery = gql`
         id
         name
         color
+      }
+      attendants {
+        user_id
       }
     }
   }
@@ -60,6 +73,14 @@ export const CreateMeeting = gql`
         name
         color
       }
+    }
+  }
+`
+
+export const createAttendant = gql`
+  mutation createAttendant($attendant: attendantInput!) {
+    createAttendant(attendant: $attendant) {
+      meetingId
     }
   }
 `

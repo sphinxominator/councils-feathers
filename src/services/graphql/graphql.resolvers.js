@@ -2,11 +2,22 @@ export default function() {
   const app = this
   const Meeting = app.service('api/meetings')
   const Group = app.service('api/groups')
+  const Attendant = app.service('api/attendants')
+  const knex = app.get('knexClient')
 
   return {
     Meeting: {
       group(meeting, args, context) {
         return Group.get(meeting.groupId, context)
+      },
+      attendants(meeting, args, context) {
+        return knex
+          .select('*')
+          .from('attendants')
+          .where({
+            meeting_id: meeting.id
+          })
+          .leftJoin('users', 'attendants.user_id', 'users.id')
       }
     },
     RootQuery: {
@@ -35,6 +46,10 @@ export default function() {
       },
       createGroup(root, { group }, context) {
         return Group.create(group, context)
+      },
+      createAttendant(root, { attendant }, context) {
+        console.log(attendant)
+        return Attendant.create(attendant, context)
       }
     }
   }
