@@ -3,6 +3,8 @@ export default function() {
   const Meeting = app.service('api/meetings')
   const Group = app.service('api/groups')
   const Attendant = app.service('api/attendants')
+  const User = app.service('api/users')
+
   const knex = app.get('knexClient')
 
   return {
@@ -38,6 +40,9 @@ export default function() {
           $sort: { id: -1 }
         }
         return Group.find(context).then(groups => groups.data)
+      },
+      user(root, { id }, context) {
+        return User.get(id, context)
       }
     },
     RootMutation: {
