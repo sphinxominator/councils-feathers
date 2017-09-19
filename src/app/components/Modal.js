@@ -85,7 +85,7 @@ const CrossIcon = () =>
 const Modal = compose(
   withRedirect,
   withHandlers({
-    handleClickOutside: ({ redirect, locationOnClose }) =>
+    handleClickOutside: ({ redirect, locationOnClose }) => event =>
       redirect(locationOnClose)
   }),
   onClickOutside,
