@@ -26,6 +26,8 @@ let assets = {}
 
 if (process.env.RAZZLE_ASSETS_MANIFEST) {
   assets = require(process.env.RAZZLE_ASSETS_MANIFEST)
+} else {
+  assets = require('../build/assets.json')
 }
 
 export default async (req, res) => {
